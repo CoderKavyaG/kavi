@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  :root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --text-secondary: #d1d5db;
+    --surface-color: #1f2937;
+    --border-color: #374151;
+  }
+  
+  .light {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --text-secondary: #6b7280;
+    --surface-color: #f9fafb;
+    --border-color: #e5e7eb;
+  }
+  
+  .dark {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --text-secondary: #d1d5db;
+    --surface-color: #1f2937;
+    --border-color: #374151;
+  }
+}
