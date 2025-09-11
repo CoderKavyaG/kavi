@@ -2,7 +2,7 @@ import React from 'react'
 import ProfilePicture from './ProfilePicture'
 import { useTypingAnimation } from '../hooks/useTypingAnimation'
 
-const Main: React.FC = () => {
+const Main = () => {
   const { displayedText, isComplete } = useTypingAnimation('hey 👋', 100)
 
   return (

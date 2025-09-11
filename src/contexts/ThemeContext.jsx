@@ -1,13 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 
-type Theme = 'dark' | 'light'
-
-interface ThemeContextType {
-  theme: Theme
-  toggleTheme: () => void
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
+const ThemeContext = createContext(undefined)
 
 export const useTheme = () => {
   const context = useContext(ThemeContext)
@@ -17,13 +10,9 @@ export const useTheme = () => {
   return context
 }
 
-interface ThemeProviderProps {
-  children: React.ReactNode
-}
-
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    const savedTheme = localStorage.getItem('theme') as Theme
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState(() => {
+    const savedTheme = localStorage.getItem('theme')
     return savedTheme || 'dark'
   })
 

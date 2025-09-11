@@ -11,7 +11,7 @@ import Gallery from './pages/Gallery'
 function App() {
   return (
     <ThemeProvider>
-      <Router>
+      <Router basename="/">
         <div className="font-sans min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
           <Header />
           <Routes>

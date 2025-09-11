@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Blog: React.FC = () => {
+const Blog = () => {
   const blogPosts = [
     {
       title: "Blockchain Too Good Journey",
