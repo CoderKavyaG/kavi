@@ -2,11 +2,11 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 
-const Header: React.FC = () => {
+const Header = () => {
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
-  const isActive = (path: string) => location.pathname === path
+  const isActive = (path) => location.pathname === path
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)' }}>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Gallery: React.FC = () => {
+const Gallery = () => {
   const profilePictures = [
     {
       src: "https://i.ibb.co/HLqxXBgd/selfie-photo.jpg",

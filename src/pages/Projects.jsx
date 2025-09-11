@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Projects: React.FC = () => {
+const Projects = () => {
   const projects = [
     {
       title: "Devlearn Community",

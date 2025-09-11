@@ -1,7 +1,7 @@
 import React from 'react'
 import { Github, Twitter, Linkedin, Youtube, Instagram, Rss } from 'lucide-react'
 
-const Footer: React.FC = () => {
+const Footer = () => {
   const socialLinks = [
     {
       name: 'GitHub',
