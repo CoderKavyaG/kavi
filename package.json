@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Personal portfolio website for coderkavyag",
   "type": "module",
-  "homepage": "https://coderkavyag.github.io/coderkavyag.github.io/",
+  "homepage": "https://coderkavyag.github.io/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
