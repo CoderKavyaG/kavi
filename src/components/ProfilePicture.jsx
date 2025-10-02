@@ -5,8 +5,8 @@ const ProfilePicture = () => {
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   const images = [
-    'https://i.ibb.co/HLqxXBgd/selfie-photo.jpg',
-    'https://i.ibb.co/bj8sPk4R/DSC02119.jpg'
+    'https://i.ibb.co/LXGvTyqm/image.png',
+    'https://i.ibb.co/LXGvTyqm/image.png'
   ]
 
   useEffect(() => {
