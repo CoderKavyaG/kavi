@@ -53,8 +53,8 @@ const SpotifyWidget = () => {
     }
   };
 
-  const handleSpotifyLogin = () => {
-    const authUrl = spotifyService.getAuthUrl();
+  const handleSpotifyLogin = async () => {
+    const authUrl = await spotifyService.getAuthUrl();
     window.location.href = authUrl;
   };
 
@@ -84,26 +84,21 @@ const SpotifyWidget = () => {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  // If not authenticated, show login button
+  // If not authenticated, show that you're offline (don't ask visitors to connect)
   if (!isAuthenticated) {
     return (
       <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center">
-              <Music className="w-6 h-6 text-white" />
+            <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
+              <Music className="w-6 h-6 text-gray-400" />
             </div>
             <div>
-              <h3 className="text-white font-medium">Connect Spotify</h3>
-              <p className="text-gray-400 text-sm">See what I'm listening to</p>
+              <h3 className="text-white font-medium">Offline</h3>
+              <p className="text-gray-400 text-sm">Not currently listening</p>
             </div>
           </div>
-          <button
-            onClick={handleSpotifyLogin}
-            className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-          >
-            Connect
-          </button>
+          <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
         </div>
       </div>
     );
