@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfilePicture from '../components/ProfilePicture'
+import SpotifyWidget from '../components/SpotifyWidget'
 import { useTypingAnimation } from '../hooks/useTypingAnimation'
 
 const Home = () => {
@@ -38,7 +39,10 @@ const Home = () => {
           </div>
 
           <div className="flex justify-center lg:justify-end">
-            <ProfilePicture />  
+            <div className="space-y-6">
+              <ProfilePicture />
+              <SpotifyWidget />
+            </div>
           </div>
         </div>
       </div>
