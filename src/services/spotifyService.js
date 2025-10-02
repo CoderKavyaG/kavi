@@ -1,39 +1,67 @@
 import axios from 'axios';
 
+// Generate random string for PKCE
+function generateRandomString(length) {
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const values = crypto.getRandomValues(new Uint8Array(length));
+  return values.reduce((acc, x) => acc + possible[x % possible.length], "");
+}
+
+// Generate code challenge for PKCE
+async function generateCodeChallenge(codeVerifier) {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(codeVerifier));
+  return btoa(String.fromCharCode(...new Uint8Array(digest)))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+}
+
 class SpotifyService {
   constructor() {
     this.clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
-    this.clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
     this.redirectUri = import.meta.env.VITE_SPOTIFY_REDIRECT_URI;
     this.accessToken = localStorage.getItem('spotify_access_token');
     this.refreshToken = localStorage.getItem('spotify_refresh_token');
     this.tokenExpiry = localStorage.getItem('spotify_token_expiry');
+    this.codeVerifier = localStorage.getItem('spotify_code_verifier');
   }
 
-  // Generate authorization URL
-  getAuthUrl() {
+  // Generate authorization URL with PKCE
+  async getAuthUrl() {
     const scope = 'user-read-currently-playing user-read-playback-state';
+    
+    // Generate PKCE parameters
+    this.codeVerifier = generateRandomString(64);
+    const codeChallenge = await generateCodeChallenge(this.codeVerifier);
+    
+    // Store code verifier
+    localStorage.setItem('spotify_code_verifier', this.codeVerifier);
+    
     const authUrl = new URL('https://accounts.spotify.com/authorize');
     
     authUrl.searchParams.append('client_id', this.clientId);
     authUrl.searchParams.append('response_type', 'code');
     authUrl.searchParams.append('redirect_uri', this.redirectUri);
     authUrl.searchParams.append('scope', scope);
+    authUrl.searchParams.append('code_challenge_method', 'S256');
+    authUrl.searchParams.append('code_challenge', codeChallenge);
     authUrl.searchParams.append('show_dialog', 'false');
     
     return authUrl.toString();
   }
 
-  // Exchange authorization code for access token
+  // Exchange authorization code for access token using PKCE
   async getAccessToken(code) {
     try {
+      const codeVerifier = localStorage.getItem('spotify_code_verifier');
+      
       const response = await axios.post('https://accounts.spotify.com/api/token', 
         new URLSearchParams({
           grant_type: 'authorization_code',
           code: code,
           redirect_uri: this.redirectUri,
           client_id: this.clientId,
-          client_secret: this.clientSecret,
+          code_verifier: codeVerifier,
         }),
         {
           headers: {
@@ -54,6 +82,9 @@ class SpotifyService {
       this.refreshToken = refresh_token;
       this.tokenExpiry = expiryTime.toString();
 
+      // Clean up code verifier
+      localStorage.removeItem('spotify_code_verifier');
+
       return access_token;
     } catch (error) {
       console.error('Error getting access token:', error);
@@ -73,7 +104,6 @@ class SpotifyService {
           grant_type: 'refresh_token',
           refresh_token: this.refreshToken,
           client_id: this.clientId,
-          client_secret: this.clientSecret,
         }),
         {
           headers: {
