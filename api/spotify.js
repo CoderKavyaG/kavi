@@ -15,6 +15,16 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
+  // Debug: Check if refresh token exists
+  if (!SPOTIFY_REFRESH_TOKEN) {
+    console.error('SPOTIFY_REFRESH_TOKEN environment variable is not set');
+    return res.status(200).json({ 
+      isPlaying: false, 
+      track: null, 
+      error: 'Spotify refresh token not configured' 
+    });
+  }
+
   try {
     // Step 1: Get fresh access token using your refresh token
     const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
