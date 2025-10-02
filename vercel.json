@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "api/spotify.js": {
+      "maxDuration": 10
+    }
+  },
+  "env": {
+    "SPOTIFY_REFRESH_TOKEN": "@spotify_refresh_token"
+  }
+}

@@ -5,36 +5,17 @@ import spotifyService from '../services/spotifyService';
 const SpotifyWidget = () => {
   const [currentTrack, setCurrentTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isPreviewPlaying, setIsPreviewPlaying] = useState(false);
   const [error, setError] = useState(null);
   const audioRef = useRef(null);
   const intervalRef = useRef(null);
 
   useEffect(() => {
-    // Always try to fetch current track if we have tokens
-    if (spotifyService.isAuthenticated()) {
-      setIsAuthenticated(true);
-      fetchCurrentTrack();
-      // Set up interval to fetch current track every 30 seconds
-      intervalRef.current = setInterval(fetchCurrentTrack, 30000);
-    } else {
-      // Even if not authenticated, try to fetch (might have been authenticated elsewhere)
-      fetchCurrentTrack();
-    }
-
-    // Handle auth callback if present
-    const handleAuth = async () => {
-      const success = await spotifyService.handleAuthCallback();
-      if (success) {
-        setIsAuthenticated(true);
-        fetchCurrentTrack();
-        // Set up interval after successful auth
-        intervalRef.current = setInterval(fetchCurrentTrack, 30000);
-      }
-    };
-
-    handleAuth();
+    // Start fetching immediately - no authentication needed
+    fetchCurrentTrack();
+    
+    // Set up interval to fetch current track every 10 seconds
+    intervalRef.current = setInterval(fetchCurrentTrack, 10000);
 
     return () => {
       if (intervalRef.current) {
@@ -54,11 +35,6 @@ const SpotifyWidget = () => {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleSpotifyLogin = async () => {
-    const authUrl = await spotifyService.getAuthUrl();
-    window.location.href = authUrl;
   };
 
   const handlePreviewPlay = () => {
@@ -86,30 +62,6 @@ const SpotifyWidget = () => {
     const remainingSeconds = seconds % 60;
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
-
-  // Show setup message only if there are no tokens AND we're not loading
-  if (!isAuthenticated && !isLoading && !localStorage.getItem('spotify_access_token')) {
-    return (
-      <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
-              <Music className="w-6 h-6 text-gray-400" />
-            </div>
-            <div>
-              <h3 className="text-white font-medium text-sm">Music Widget</h3>
-              <p className="text-gray-400 text-xs">Setup required</p>
-            </div>
-          </div>
-          <div className="text-xs text-gray-500">
-            <a href="/spotify-admin" className="text-blue-400 hover:text-blue-300">
-              Setup
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Loading state
   if (isLoading) {
@@ -144,7 +96,7 @@ const SpotifyWidget = () => {
   }
 
   // Not playing anything
-  if (!currentTrack) {
+  if (!currentTrack || !currentTrack.track) {
     return (
       <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
         <div className="flex items-center justify-between">
@@ -210,7 +162,7 @@ const SpotifyWidget = () => {
           </p>
           
           {/* Progress Bar */}
-          {currentTrack.isPlaying && (
+          {currentTrack.isPlaying && currentTrack.track.progress && currentTrack.track.duration && (
             <div className="mt-2">
               <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
                 <span>{formatTime(currentTrack.track.progress)}</span>
