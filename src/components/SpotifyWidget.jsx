@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, ExternalLink, Music, Volume2 } from 'lucide-react';
-import spotifyService from '../services/spotifyService';
+import spotifyService from '../services/realSpotifyService';
 
 const SpotifyWidget = () => {
   const [currentTrack, setCurrentTrack] = useState(null);

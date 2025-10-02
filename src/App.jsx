@@ -7,7 +7,6 @@ import Home from './pages/Home'
 import Blog from './pages/Blog'
 import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
-import SpotifyAdmin from './pages/SpotifyAdmin'
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/gallery" element={<Gallery />} />
-            <Route path="/spotify-admin" element={<SpotifyAdmin />} />
           </Routes>
           <Footer />
         </div>
