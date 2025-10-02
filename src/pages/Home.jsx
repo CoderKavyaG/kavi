@@ -1,6 +1,6 @@
 import React from 'react'
 import ProfilePicture from '../components/ProfilePicture'
-import SpotifyWidget from '../components/SpotifyWidgetNew'
+import SpotifyWidget from '../components/SpotifyWidget'
 import { useTypingAnimation } from '../hooks/useTypingAnimation'
 
 const Home = () => {
