@@ -8,6 +8,7 @@ import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
+import Resume from './pages/Resume'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/resume" element={<Resume />} />
           </Routes>
           <Footer />
         </div>

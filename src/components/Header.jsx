@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
+import { Download } from 'lucide-react'
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme()
@@ -46,6 +47,25 @@ const Header = () => {
             style={{ color: isActive('/projects') ? linkActiveColor : linkColor }}
           >
             Projects
+          </Link>
+          <Link 
+            to="/resume"
+            className={`text-sm transition-colors duration-200 ${
+              isActive('/resume') 
+                ? 'font-medium' 
+                : 'hover:opacity-70'
+            }`}
+            style={{ color: isActive('/resume') ? linkActiveColor : linkColor }}
+          >
+            Resume
+          </Link>
+          <Link 
+            to="/resume"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:opacity-80"
+            style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
+          >
+            <Download className="w-3.5 h-3.5" />
+            CV
           </Link>
           <button 
             onClick={toggleTheme}

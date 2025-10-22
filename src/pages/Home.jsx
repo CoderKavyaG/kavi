@@ -1,18 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ProfilePicture from '../components/ProfilePicture'
 import SpotifyWidget from '../components/SpotifyWidget'
 import CodingStats from '../components/CodingStats'
 import FeaturedThreads from '../components/FeaturedThreads'
 import GitHubActivity from '../components/GitHubActivity'
+import ContactModal from '../components/ContactModal'
 import { FaPaperPlane, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa'
 import { FaXTwitter } from 'react-icons/fa6'
 import { useBlogPosts } from '../hooks/useBlogPosts'
-import { Calendar, Clock, ArrowRight } from 'lucide-react'
+import { Calendar, Clock, ArrowRight, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
   const { posts, loading } = useBlogPosts()
   const latestPosts = posts.slice(0, 1)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   const techStack = [
     { name: 'Typescript', icon: 'TS', bgColor: '#3178c6' },
@@ -67,13 +69,20 @@ const Home = () => {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <a 
-                href="mailto:codecraftkavya@gmail.com"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+              <button
+                onClick={() => setIsContactModalOpen(true)}
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 hover:opacity-80"
                 style={{ backgroundColor: 'var(--surface-color)', color: 'var(--text-color)' }}
               >
                 <FaPaperPlane /> Get in touch
-              </a>
+              </button>
+              <Link 
+                to="/resume"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-80"
+                style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
+              >
+                <FileText className="w-4 h-4" /> View Resume
+              </Link>
             </div>
 
             <div className="flex gap-4 pt-1">
@@ -404,6 +413,8 @@ const Home = () => {
           <GitHubActivity />
         </div>
       </div>
+
+      <ContactModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </main>
   )
 }

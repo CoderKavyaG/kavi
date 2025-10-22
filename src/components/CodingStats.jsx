@@ -1,35 +1,53 @@
 import React, { useState, useEffect } from 'react'
-import { FaCode } from 'react-icons/fa'
+import { FaCode, FaGithub } from 'react-icons/fa'
 
 const CodingStats = () => {
   const [stats, setStats] = useState({
     loading: true,
-    hours: 0,
-    minutes: 0
+    commits: 0,
+    repos: 0
   })
 
   useEffect(() => {
-    const fetchCodingStats = async () => {
+    const fetchGitHubStats = async () => {
       try {
-        const response = await fetch('/api/wakatime')
-        const data = await response.json()
+        const username = 'coderkavyag'
+        
+        // Fetch recent commits from main repo
+        const commitsResponse = await fetch(`https://api.github.com/repos/CoderKavyaG/kavi/commits?per_page=100`)
+        const commits = await commitsResponse.json()
+        
+        // Count commits from today
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        
+        const todayCommits = commits.filter(commit => {
+          const commitDate = new Date(commit.commit.author.date)
+          commitDate.setHours(0, 0, 0, 0)
+          return commitDate.getTime() === today.getTime()
+        }).length
+        
+        // Fetch repositories count
+        const userResponse = await fetch(`https://api.github.com/users/${username}`)
+        const userData = await userResponse.json()
         
         setStats({
           loading: false,
-          hours: data.hours || 0,
-          minutes: data.minutes || 0
+          commits: todayCommits,
+          repos: userData.public_repos || 0
         })
       } catch (error) {
+        console.error('GitHub API error:', error)
         setStats({
           loading: false,
-          hours: 0,
-          minutes: 0
+          commits: 0,
+          repos: 0
         })
       }
     }
 
-    fetchCodingStats()
-    const interval = setInterval(fetchCodingStats, 10 * 60 * 1000)
+    fetchGitHubStats()
+    const interval = setInterval(fetchGitHubStats, 10 * 60 * 1000)
     return () => clearInterval(interval)
   }, [])
 
@@ -42,7 +60,7 @@ const CodingStats = () => {
           borderColor: 'var(--border-color)'
         }}
       >
-        <FaCode className="text-lg" style={{ color: 'var(--text-secondary)' }} />
+        <FaGithub className="text-lg" style={{ color: 'var(--text-secondary)' }} />
         <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
           Loading...
         </span>
@@ -50,16 +68,10 @@ const CodingStats = () => {
     )
   }
 
-  const hasActivity = stats.hours > 0 || stats.minutes > 0
-  const timeText = stats.hours > 0 
-    ? `${stats.hours}h ${stats.minutes}m` 
-    : stats.minutes > 0 
-      ? `${stats.minutes}m`
-      : '0h'
-
+  const hasActivity = stats.commits > 0
   const activityText = hasActivity
-    ? `Coded today: ${timeText}`
-    : 'Reading docs and blogs'
+    ? `${stats.commits} commit${stats.commits > 1 ? 's' : ''} today`
+    : 'Building cool stuff'
 
   const iconColor = hasActivity ? '#10b981' : '#f59e0b'
 
@@ -71,13 +83,16 @@ const CodingStats = () => {
         borderColor: 'var(--border-color)'
       }}
     >
-      <FaCode 
+      <FaGithub 
         className="text-lg flex-shrink-0" 
         style={{ color: iconColor }} 
       />
       <div className="flex flex-col min-w-0">
         <span className="text-sm font-medium truncate" style={{ color: 'var(--text-color)' }}>
           {activityText}
+        </span>
+        <span className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
+          {stats.repos} public repos
         </span>
       </div>
     </div>
