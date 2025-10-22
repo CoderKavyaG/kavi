@@ -13,14 +13,20 @@
     --text-secondary: #d1d5db;
     --surface-color: #1f2937;
     --border-color: #374151;
+    --card-bg: #1a1a1a;
+    --accent-bg: #262626;
+    --accent-color: #60a5fa;
   }
   
   .light {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --text-secondary: #6b7280;
-    --surface-color: #f9fafb;
-    --border-color: #e5e7eb;
+    --bg-color: #fffef7;
+    --text-color: #1a1a1a;
+    --text-secondary: #525252;
+    --surface-color: #fef9e7;
+    --border-color: #f3e5ab;
+    --card-bg: #fffef7;
+    --accent-bg: #fef5dc;
+    --accent-color: #3b82f6;
   }
   
   .dark {
@@ -29,5 +35,13 @@
     --text-secondary: #d1d5db;
     --surface-color: #1f2937;
     --border-color: #374151;
+    --card-bg: #1a1a1a;
+    --accent-bg: #262626;
+    --accent-color: #60a5fa;
   }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }

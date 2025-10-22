@@ -38,16 +38,26 @@ const SpotifyWidget = () => {
   };
 
   const handlePreviewPlay = () => {
-    if (!currentTrack?.track?.previewUrl) return;
+    if (!currentTrack?.track?.previewUrl) {
+      console.log('No preview URL available for this track');
+      return;
+    }
+
+    console.log('Preview URL:', currentTrack.track.previewUrl);
 
     if (isPreviewPlaying) {
       audioRef.current?.pause();
       setIsPreviewPlaying(false);
+      console.log('Paused preview');
     } else {
       if (audioRef.current) {
         audioRef.current.src = currentTrack.track.previewUrl;
-        audioRef.current.play();
-        setIsPreviewPlaying(true);
+        audioRef.current.play().then(() => {
+          console.log('Started playing preview');
+          setIsPreviewPlaying(true);
+        }).catch(error => {
+          console.error('Failed to play preview:', error);
+        });
       }
     }
   };
@@ -66,12 +76,12 @@ const SpotifyWidget = () => {
   // Loading state
   if (isLoading) {
     return (
-      <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
+      <div className="rounded-lg p-4 border animate-pulse" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-gray-700 rounded-lg animate-pulse"></div>
+          <div className="w-12 h-12 rounded-lg animate-pulse" style={{ backgroundColor: 'var(--accent-bg)' }}></div>
           <div className="flex-1">
-            <div className="h-4 bg-gray-700 rounded animate-pulse mb-2"></div>
-            <div className="h-3 bg-gray-700 rounded animate-pulse w-3/4"></div>
+            <div className="h-4 rounded animate-pulse mb-2" style={{ backgroundColor: 'var(--accent-bg)' }}></div>
+            <div className="h-3 rounded animate-pulse w-3/4" style={{ backgroundColor: 'var(--accent-bg)' }}></div>
           </div>
         </div>
       </div>
@@ -81,14 +91,14 @@ const SpotifyWidget = () => {
   // Error state
   if (error) {
     return (
-      <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
+      <div className="rounded-lg p-4 border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center space-x-3">
           <div className="w-12 h-12 bg-red-500 rounded-lg flex items-center justify-center">
             <Music className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="text-white font-medium">Spotify Error</h3>
-            <p className="text-gray-400 text-sm">{error}</p>
+            <h3 className="font-medium" style={{ color: 'var(--text-color)' }}>Spotify Error</h3>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{error}</p>
           </div>
         </div>
       </div>
@@ -98,18 +108,18 @@ const SpotifyWidget = () => {
   // Not playing anything
   if (!currentTrack || !currentTrack.track) {
     return (
-      <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
+      <div className="rounded-lg p-4 border hover:shadow-sm transition-shadow duration-200" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gray-700 rounded-lg flex items-center justify-center">
-              <Music className="w-6 h-6 text-gray-400" />
+            <div className="w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: 'var(--accent-bg)' }}>
+              <Music className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
             </div>
-            <div>
-              <h3 className="text-white font-medium">Offline</h3>
-              <p className="text-gray-400 text-sm">Not currently listening</p>
+            <div className="min-w-0">
+              <h3 className="font-medium text-sm" style={{ color: 'var(--text-color)' }}>Offline</h3>
+              <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>Not currently listening</p>
             </div>
           </div>
-          <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+          <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: 'var(--text-secondary)' }}></div>
         </div>
       </div>
     );
@@ -117,14 +127,14 @@ const SpotifyWidget = () => {
 
   // Currently playing
   return (
-    <div className="spotify-widget bg-gray-900 rounded-lg p-4 border border-gray-700">
+    <div className="rounded-lg p-4 border hover:shadow-sm transition-shadow duration-200" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
       <audio
         ref={audioRef}
         onEnded={handleAudioEnded}
         onError={() => setIsPreviewPlaying(false)}
       />
       
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-3">
         {/* Album Art */}
         <div className="relative flex-shrink-0">
           <img
@@ -142,46 +152,26 @@ const SpotifyWidget = () => {
         {/* Track Info */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center space-x-2 mb-1">
-            <h3 className="text-white font-medium text-sm truncate">
+            <h3 className="font-medium text-sm truncate" style={{ color: 'var(--text-color)' }}>
               {currentTrack.track.name}
             </h3>
             <a
               href={currentTrack.track.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
+              className="hover:opacity-70 transition-opacity flex-shrink-0"
+              style={{ color: 'var(--text-secondary)' }}
             >
               <ExternalLink className="w-3 h-3" />
             </a>
           </div>
-          <p className="text-gray-400 text-xs truncate mb-1">
+          <p className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
             {currentTrack.track.artists}
           </p>
-          <p className="text-gray-500 text-xs truncate">
-            {currentTrack.track.album}
-          </p>
-          
-          {/* Progress Bar */}
-          {currentTrack.isPlaying && currentTrack.track.progress && currentTrack.track.duration && (
-            <div className="mt-2">
-              <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
-                <span>{formatTime(currentTrack.track.progress)}</span>
-                <span>{formatTime(currentTrack.track.duration)}</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-1">
-                <div
-                  className="bg-green-500 h-1 rounded-full transition-all duration-1000"
-                  style={{
-                    width: `${(currentTrack.track.progress / currentTrack.track.duration) * 100}%`
-                  }}
-                ></div>
-              </div>
-            </div>
-          )}
         </div>
 
         {/* Controls */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 flex-shrink-0">
           {/* Preview Play Button */}
           {currentTrack.track.previewUrl && (
             <button
@@ -196,22 +186,6 @@ const SpotifyWidget = () => {
               )}
             </button>
           )}
-
-          {/* Status Indicator */}
-          <div className="flex flex-col items-center">
-            {currentTrack.isPlaying ? (
-              <Volume2 className="w-4 h-4 text-green-500" />
-            ) : (
-              <Pause className="w-4 h-4 text-gray-500" />
-            )}
-            <div className="text-xs text-gray-500 mt-1">
-              {currentTrack.device?.name && (
-                <span className="truncate max-w-16" title={currentTrack.device.name}>
-                  {currentTrack.device.name}
-                </span>
-              )}
-            </div>
-          </div>
         </div>
       </div>
     </div>

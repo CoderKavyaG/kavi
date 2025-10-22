@@ -8,46 +8,54 @@ const Header = () => {
 
   const isActive = (path) => location.pathname === path
 
+  const navBgColor = theme === 'dark' ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 254, 247, 0.9)'
+  const linkColor = theme === 'dark' ? '#9ca3af' : '#525252'
+  const linkActiveColor = theme === 'dark' ? '#ffffff' : '#1a1a1a'
+  
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-sm border-b" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)' }}>
-      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold hover:text-blue-400 transition-colors duration-200" style={{ color: 'var(--text-color)' }}>
-        coderkavyag
+    <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b" style={{ backgroundColor: navBgColor, borderColor: 'var(--border-color)' }}>
+      <div className="max-w-6xl mx-auto px-6 py-3 flex justify-between items-center">
+        <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200">
+          <div className="w-10 h-10 rounded-lg overflow-hidden bg-yellow-400">
+            <img 
+              src="https://i.ibb.co/LXGvTyqm/image.png" 
+              alt="kavi" 
+              className="w-full h-full object-cover"
+            />
+          </div>
         </Link>
-        <div className="flex items-center space-x-8">
+        <div className="flex items-center space-x-6">
           <Link 
             to="/blog"
-            className={`transition-colors duration-200 ${
+            className={`text-sm transition-colors duration-200 ${
               isActive('/blog') 
-                ? 'text-blue-400' 
-                : 'hover:text-blue-400'
+                ? 'font-medium' 
+                : 'hover:opacity-70'
             }`}
-            style={{ color: isActive('/blog') ? '#60a5fa' : 'var(--text-color)' }}
+            style={{ color: isActive('/blog') ? linkActiveColor : linkColor }}
           >
-            Blog
+            Blogs
           </Link>
           <Link 
-            to="/gallery"
-            className={`transition-colors duration-200 ${
-              isActive('/gallery') 
-                ? 'text-blue-400' 
-                : 'hover:text-blue-400'
+            to="/projects"
+            className={`text-sm transition-colors duration-200 ${
+              isActive('/projects') 
+                ? 'font-medium' 
+                : 'hover:opacity-70'
             }`}
-            style={{ color: isActive('/gallery') ? '#60a5fa' : 'var(--text-color)' }}
+            style={{ color: isActive('/projects') ? linkActiveColor : linkColor }}
           >
-            Gallery
+            Projects
           </Link>
           <button 
             onClick={toggleTheme}
-            className="w-6 h-6 rounded-full border-2 hover:border-blue-400 transition-colors duration-200 flex items-center justify-center relative"
-            style={{ borderColor: 'var(--text-secondary)' }}
+            className="w-7 h-7 rounded-full flex items-center justify-center hover:opacity-70 transition-all duration-200"
+            style={{ 
+              backgroundColor: theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(243, 229, 171, 0.5)'
+            }}
             aria-label="Toggle theme"
           >
-            <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
-              theme === 'dark' 
-                ? 'translate-x-0' 
-                : '-translate-x-1'
-            }`} style={{ backgroundColor: 'var(--text-color)' }} />
+            <div className="text-base">{theme === 'dark' ? '🌙' : '☀️'}</div>
           </button>
         </div>
       </div>

@@ -1,8 +1,6 @@
 // Real Spotify API integration - shows YOUR actual currently playing music
-const SPOTIFY_CLIENT_ID = 'eb02480e8e464c6b86e25bb6ff6d7260';
-const SPOTIFY_CLIENT_SECRET = '833e5e422bbe4259a71bcf2d0f41aa82';
-
-// This will be YOUR refresh token (we'll get it in setup)
+const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET;
 const SPOTIFY_REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN;
 
 export default async function handler(req, res) {
@@ -15,13 +13,13 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Debug: Check if refresh token exists
-  if (!SPOTIFY_REFRESH_TOKEN) {
-    console.error('SPOTIFY_REFRESH_TOKEN environment variable is not set');
+  // Check if credentials exist
+  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET || !SPOTIFY_REFRESH_TOKEN) {
+    console.error('Spotify credentials not configured');
     return res.status(200).json({ 
       isPlaying: false, 
       track: null, 
-      error: 'Spotify refresh token not configured' 
+      error: 'Spotify credentials not configured' 
     });
   }
 

@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 const ProfilePicture = () => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-
-  const images = [
-    'https://i.ibb.co/LXGvTyqm/image.png',
-    'https://i.ibb.co/LXGvTyqm/image.png'
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsTransitioning(true)
-      
-      setTimeout(() => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length)
-        setIsTransitioning(false)
-      }, 250)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [images.length])
+  // Using your existing profile picture temporarily
+  const profileImage = 'https://i.ibb.co/LXGvTyqm/image.png'
 
   return (
-    <div className="relative w-80 h-80 rounded-2xl overflow-hidden shadow-2xl">
+    <div className="relative w-full h-full rounded-full overflow-hidden bg-yellow-400">
       <img 
-        src={images[currentIndex]} 
+        src={profileImage}
         alt="kavi" 
-        className={`w-full h-full object-cover transition-opacity duration-500 ${
-          isTransitioning ? 'opacity-0' : 'opacity-100'
-        }`}
+        className="w-full h-full object-cover"
       />
     </div>
   )

@@ -2,6 +2,20 @@
   "functions": {
     "api/spotify.js": {
       "maxDuration": 10
+    },
+    "api/wakatime.js": {
+      "maxDuration": 10
     }
-  }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    }
+  ]
 }
