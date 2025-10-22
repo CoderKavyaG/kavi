@@ -35,7 +35,7 @@ const Home = () => {
             {/* Description */}
             <div className="space-y-3 text-base" style={{ color: '#9ca3af' }}>
               <p>
-                I build interactive web apps using{' '}
+                I'm a 3rd year CSE student and Full Stack web developer. I build interactive web apps using{' '}
                 <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium mx-1" style={{ backgroundColor: '#61dafb', color: '#000' }}>
                   ⚛️ React
                 </span>{' '}
@@ -116,6 +116,48 @@ const Home = () => {
             <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
               <CodingStats />
               <SpotifyWidget />
+            </div>
+          </div>
+        </div>
+
+        {/* About Me Section */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-color)' }}>
+            About
+          </h2>
+          <div className="text-base space-y-4" style={{ color: '#9ca3af' }}>
+            <h3 className="text-xl font-semibold" style={{ color: 'var(--text-color)' }}>Me</h3>
+            <p>
+              I'm a 3rd year Computer Science Engineering student and Full Stack web developer. I love building products to solve real-world problems. I'm specialized in building MVP's.
+            </p>
+            <div className="pt-4">
+              <h4 className="text-lg font-medium mb-3" style={{ color: 'var(--text-color)' }}>Skills</h4>
+              <div className="flex flex-wrap gap-2">
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#61dafb', color: '#000' }}>
+                  ⚛️ React
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#3178c6' }}>
+                  TS TypeScript
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#f7df1e', color: '#000' }}>
+                  JS JavaScript
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#000000' }}>
+                  Next.js
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#68a063' }}>
+                  Node.js
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#47A248' }}>
+                  🍃 MongoDB
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#336791' }}>
+                  🐘 PostgreSQL
+                </span>
+                <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white" style={{ backgroundColor: '#0175C2' }}>
+                  Prisma
+                </span>
+              </div>
             </div>
           </div>
         </div>

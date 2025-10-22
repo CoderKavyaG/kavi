@@ -9,19 +9,14 @@ class SpotifyService {
   // Get YOUR currently playing track
   async getCurrentlyPlaying() {
     try {
-      console.log('Fetching Spotify data from API...');
-      
-      // Always use API endpoint for security
       const response = await axios.get('/api/spotify');
       if (response.status === 200 && response.data) {
-        console.log('Received data:', response.data);
         return response.data;
       }
       return null;
     } catch (error) {
       console.error('Error fetching current track:', error);
       
-      // Fallback to show that we're trying to connect
       return {
         isPlaying: false,
         track: null,

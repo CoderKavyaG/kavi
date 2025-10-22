@@ -39,21 +39,16 @@ const SpotifyWidget = () => {
 
   const handlePreviewPlay = () => {
     if (!currentTrack?.track?.previewUrl) {
-      console.log('No preview URL available for this track');
       return;
     }
-
-    console.log('Preview URL:', currentTrack.track.previewUrl);
 
     if (isPreviewPlaying) {
       audioRef.current?.pause();
       setIsPreviewPlaying(false);
-      console.log('Paused preview');
     } else {
       if (audioRef.current) {
         audioRef.current.src = currentTrack.track.previewUrl;
         audioRef.current.play().then(() => {
-          console.log('Started playing preview');
           setIsPreviewPlaying(true);
         }).catch(error => {
           console.error('Failed to play preview:', error);
