@@ -28,7 +28,6 @@ const Projects = () => {
   return (
     <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
       <div className="max-w-5xl mx-auto px-6 py-16">
-        {}
         <header className="mb-12 text-center">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Code2 className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
@@ -41,7 +40,6 @@ const Projects = () => {
           </p>
         </header>
 
-        {}
         <section className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
@@ -53,7 +51,6 @@ const Projects = () => {
                   borderColor: 'var(--border-color)'
                 }}
               >
-                {}
                 <div className="relative h-56 overflow-hidden" style={{ backgroundColor: 'var(--bg-color)' }}>
                   <img 
                     src={project.image} 
@@ -88,7 +85,6 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {}
                 <div className="p-6 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
@@ -156,7 +152,6 @@ const Projects = () => {
           </div>
         </section>
 
-        {}
         <section className="mt-12 text-center py-8 px-6 rounded-xl border max-w-2xl mx-auto" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
           <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-color)' }}>
             More projects coming soon
