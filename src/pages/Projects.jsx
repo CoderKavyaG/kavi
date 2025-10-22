@@ -5,11 +5,21 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "Second Brain",
+      title: "Portfolio",
+      description: "My personal portfolio website built with React, featuring blog system with Winter Arc Journey, projects showcase, real-time coding stats, and Spotify integration.",
+      image: "https://i.ibb.co/5h8mbc6B/image.png",
+      tags: ["React", "Vite", "Tailwind CSS", "Router"],
+      github: "https://github.com/CoderKavyaG/kavi",
+      live: "https://coderkavyag.github.io",
+      date: "October 2024"
+    },
+    {
+      id: 2,
+      title: "Brainly",
       description: "A personal knowledge management system built to organize notes, documents, tweets, and links. Features include tagging, search, and categorization for building a digital second brain.",
-      image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?w=800&auto=format&fit=crop",
+      image: "https://i.ibb.co/6Jt6gStD/image.png",
       tags: ["React", "TypeScript", "Tailwind CSS", "Knowledge Management"],
-      github: "https://github.com/coderkavyag",
+      github: "https://github.com/CoderKavyaG/brainly.com",
       live: null,
       date: "October 2024"
     }
@@ -18,7 +28,7 @@ const Projects = () => {
   return (
     <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
       <div className="max-w-5xl mx-auto px-6 py-16">
-        {/* Header */}
+        {}
         <header className="mb-12 text-center">
           <div className="flex items-center justify-center gap-3 mb-3">
             <Code2 className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
@@ -31,26 +41,25 @@ const Projects = () => {
           </p>
         </header>
 
-        {/* Projects Grid */}
-        <section className="max-w-3xl mx-auto">
-          <div className="space-y-6">
+        {}
+        <section className="max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
               <article 
                 key={project.id}
-                className="group rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-xl"
+                className="group rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
                 style={{ 
                   backgroundColor: 'var(--surface-color)', 
                   borderColor: 'var(--border-color)'
                 }}
               >
-                {/* Project Image */}
-                <div className="relative h-48 overflow-hidden">
+                {}
+                <div className="relative h-56 overflow-hidden" style={{ backgroundColor: 'var(--bg-color)' }}>
                   <img 
                     src={project.image} 
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                   <div className="absolute top-3 right-3 flex gap-2">
                     {project.github && (
                       <a
@@ -59,6 +68,7 @@ const Projects = () => {
                         rel="noopener noreferrer"
                         className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200"
                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <Github className="w-4 h-4 text-white" />
                       </a>
@@ -70,6 +80,7 @@ const Projects = () => {
                         rel="noopener noreferrer"
                         className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200"
                         style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <Globe className="w-4 h-4 text-white" />
                       </a>
@@ -77,10 +88,10 @@ const Projects = () => {
                   </div>
                 </div>
 
-                {/* Project Info */}
-                <div className="p-5 space-y-3">
-                  <div className="flex items-start justify-between">
-                    <div>
+                {}
+                <div className="p-6 space-y-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
                       <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-color)' }}>
                         {project.title}
                       </h3>
@@ -89,9 +100,12 @@ const Projects = () => {
                         {project.date}
                       </p>
                     </div>
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                    </div>
                   </div>
 
-                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm leading-relaxed line-clamp-3" style={{ color: 'var(--text-secondary)' }}>
                     {project.description}
                   </p>
 
@@ -110,7 +124,7 @@ const Projects = () => {
                     ))}
                   </div>
 
-                  <div className="flex gap-3 pt-2">
+                  <div className="flex gap-3 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
                     {project.github && (
                       <a
                         href={project.github}
@@ -142,7 +156,7 @@ const Projects = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
+        {}
         <section className="mt-12 text-center py-8 px-6 rounded-xl border max-w-2xl mx-auto" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
           <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-color)' }}>
             More projects coming soon
