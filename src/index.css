@@ -16,6 +16,7 @@
     --card-bg: #07090b;
     --accent-bg: #081018;
     --accent-color: #60a5fa;
+    --theme-transition: 0s;
   }
   
   .light {
@@ -38,6 +39,16 @@
     --card-bg: #07090b;
     --accent-bg: #081018;
     --accent-color: #60a5fa;
+  }
+  
+  /* Smooth theme transitions */
+  *,
+  *::before,
+  *::after {
+    transition: background-color var(--theme-transition),
+                color var(--theme-transition),
+                border-color var(--theme-transition),
+                fill var(--theme-transition);
   }
 }
 /* Legacy component-level styles removed. Use Tailwind utilities and CSS variables instead. */

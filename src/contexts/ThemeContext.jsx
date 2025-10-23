@@ -33,11 +33,21 @@ export const ThemeProvider = ({ children }) => {
   })
 
   useEffect(() => {
+    // Add transition class before theme change
+    document.documentElement.style.setProperty('--theme-transition', '0.5s ease-in-out')
+    
     // Apply theme to document
     document.documentElement.className = theme
     
     // Save user's theme preference
     localStorage.setItem('theme', theme)
+    
+    // Remove transition after it completes to avoid affecting other animations
+    const timer = setTimeout(() => {
+      document.documentElement.style.setProperty('--theme-transition', '0s')
+    }, 500)
+    
+    return () => clearTimeout(timer)
   }, [theme])
 
   // Listen for system theme changes (when user hasn't manually set a preference)

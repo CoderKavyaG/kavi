@@ -128,66 +128,6 @@ const Home = () => {
         </div>
 
         <div className="mt-16">
-          <div className="mb-4">
-            <h2 className="text-xl font-bold flex items-center gap-2 text-[var(--text-color)]">
-              <FaXTwitter className="text-lg" />
-              Featured Threads
-            </h2>
-          </div>
-          <FeaturedThreads />
-        </div>
-
-        <div className="mt-16">
-          <div className="mb-3">
-            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">About Me</h2>
-          </div>
-          <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-start">
-            <div className="w-full sm:w-56 md:w-64 h-56 sm:h-56 md:h-64 flex-shrink-0 rounded-2xl overflow-hidden bg-yellow-400 mx-auto md:mx-0">
-              <img 
-                src="https://i.ibb.co/LXGvTyqm/image.png"
-                alt="Kavi" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            <div className="flex-1 space-y-4">
-              <div>
-                <h3 className="text-xl font-semibold mb-3 text-[var(--text-color)]">
-                  Kavi
-                </h3>
-                <p className="text-base leading-relaxed text-[var(--text-secondary)]">
-                  I am a college student at a tier-3 college and realised late that I love doing web development, so I'm currently learning and building projects in web development.
-                </p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-medium mb-3 text-[var(--text-color)]">Skills</h4>
-                <div className="flex flex-wrap gap-2 items-center">
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium bg-[#61dafb] text-black">
-                    ⚛️ React
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#3178c6]">
-                    TS
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#47A248]">
-                    🐘 MongoDB
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-black bg-[#f0db4f]">
-                    JS
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#3b82f6]">
-                    Node.js
-                  </span>
-                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#336791]">
-                    🐘 PostgreSQL
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-16">
           <div className="mb-6">
             <p className="text-xs sm:text-sm mb-1 text-[var(--text-secondary)]">Featured</p>
             <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">Projects</h2>
@@ -291,10 +231,68 @@ const Home = () => {
         </div>
 
         <div className="mt-16">
+          <div className="mb-3">
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">About Me</h2>
+          </div>
+          <div className="flex flex-col md:flex-row gap-6 sm:gap-8 items-start">
+            <div className="w-full sm:w-56 md:w-64 h-56 sm:h-56 md:h-64 flex-shrink-0 rounded-2xl overflow-hidden bg-yellow-400 mx-auto md:mx-0">
+              <img 
+                src="https://i.ibb.co/LXGvTyqm/image.png"
+                alt="Kavi" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <div className="flex-1 space-y-4">
+              <div>
+                <h3 className="text-xl font-semibold mb-3 text-[var(--text-color)]">
+                  Kavi
+                </h3>
+                <p className="text-base leading-relaxed text-[var(--text-secondary)]">
+                  I am a college student at a tier-3 college and realised late that I love doing web development, so I'm currently learning and building projects in web development.
+                </p>
+              </div>
+              
+              <div>
+                <h4 className="text-lg font-medium mb-3 text-[var(--text-color)]">Skills</h4>
+                <div className="flex flex-wrap gap-2 items-center">
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium bg-[#61dafb] text-black">
+                    ⚛️ React
+                  </span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#3178c6]">
+                    TS
+                  </span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#47A248]">
+                    🐘 MongoDB
+                  </span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-black bg-[#f0db4f]">
+                    JS
+                  </span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#3b82f6]">
+                    Node.js
+                  </span>
+                  <span className="inline-flex items-center px-3 py-1.5 rounded text-sm font-medium text-white bg-[#336791]">
+                    🐘 PostgreSQL
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-16">
+          <div className="mb-6">
+            <p className="text-xs sm:text-sm mb-1 text-[var(--text-secondary)]">Read my</p>
+            <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">Tweet Threads</h2>
+          </div>
+          <FeaturedThreads />
+        </div>
+
+        <div className="mt-16">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <p className="text-xs sm:text-sm mb-1 text-[var(--text-secondary)]">Featured</p>
-              <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">Blogs</h2>
+              <p className="text-xs sm:text-sm mb-1 text-[var(--text-secondary)]">Checkout</p>
+              <h2 className="text-xl sm:text-2xl font-bold text-[var(--text-color)]">My Blogs</h2>
             </div>
             <Link
               to="/blog"
@@ -306,7 +304,7 @@ const Home = () => {
           
             {loading ? (
             <div className="grid grid-cols-1 gap-6">
-              <div className="h-96 rounded-2xl animate-pulse bg-[var(--surface-color)]" />
+              <div className="h-80 rounded-2xl animate-pulse bg-[var(--surface-color)]" />
             </div>
           ) : (
             <div className="grid grid-cols-1 gap-6">
@@ -314,52 +312,65 @@ const Home = () => {
                 <Link
                   key={post.id}
                   to={`/blog/${post.slug}`}
-                  className="group rounded-2xl overflow-hidden border transition-transform duration-250 hover:-translate-y-1.5 hover:scale-[1.01] bg-[var(--surface-color)] border-[var(--border-color)]"
+                  className="group rounded-2xl overflow-hidden border transition-all duration-300 hover:shadow-lg hover:border-[var(--accent-color)]/40 bg-[var(--surface-color)] border-[var(--border-color)]"
                 >
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={post.coverImage}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center px-6 bg-gradient-to-b from-[rgba(7,10,13,0.25)] to-[rgba(7,10,13,0.6)]">
-                      <h3 className="text-2xl font-bold text-white text-center tracking-wider">
-                        {post.title.toUpperCase()}
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div className="p-5 space-y-3">
-                    <p className="text-sm line-clamp-2 text-[var(--text-secondary)]">
-                      {post.excerpt}
-                    </p>
-
-                    <div className="flex flex-wrap gap-2">
-                      {post.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag}
-                          className="px-2 py-1 rounded-full text-xs bg-[var(--accent-bg)] text-[var(--text-secondary)]"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                  {/* Horizontal Layout */}
+                  <div className="flex flex-col sm:flex-row">
+                    {/* Image Section */}
+                    <div className="relative h-48 sm:h-auto sm:w-72 overflow-hidden flex-shrink-0">
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-black/60 via-black/20 to-transparent"></div>
                     </div>
 
-                    <div className="flex items-center justify-between pt-2">
-                      <span className="flex items-center gap-1 text-xs text-[var(--text-secondary)]">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(post.date).toLocaleDateString('en-US', {
-                          month: 'long',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
-                      </span>
+                    {/* Content Section */}
+                    <div className="flex-1 p-6 sm:p-8 flex flex-col justify-between">
+                      {/* Top Content */}
+                      <div className="space-y-3">
+                        {/* Title */}
+                        <h3 className="text-xl sm:text-2xl font-bold text-[var(--text-color)] leading-tight group-hover:text-[var(--accent-color)] transition-colors duration-300">
+                          {post.title}
+                        </h3>
 
-                      <span
-                        className="flex items-center gap-2 text-sm font-medium transition-opacity duration-200 text-[var(--accent-color)]"
-                      >
-                        Read More <ArrowRight className="w-4 h-4" />
-                      </span>
+                        {/* Excerpt */}
+                        <p className="text-sm sm:text-base leading-relaxed line-clamp-2 text-[var(--text-secondary)]">
+                          {post.excerpt}
+                        </p>
+
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {post.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--text-secondary)] border border-[var(--border-color)]"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Bottom Footer */}
+                      <div className="flex items-center justify-between pt-4 mt-4 border-t border-[var(--border-color)]">
+                        <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+                          <Calendar className="w-4 h-4" />
+                          <span>
+                            {new Date(post.date).toLocaleDateString('en-US', {
+                              month: 'short',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-sm font-medium text-[var(--accent-color)] group-hover:gap-3 transition-all duration-300">
+                          Read Article
+                          <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Link>

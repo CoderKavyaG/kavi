@@ -5,23 +5,17 @@ const GitHubActivity = () => {
   const username = 'coderkavyag'
   const [cacheBuster, setCacheBuster] = useState(Date.now())
   const [stats, setStats] = useState(null)
-  const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
+  const [imageError, setImageError] = useState(false)
+  const [imageKey, setImageKey] = useState(0)
 
   useEffect(() => {
     let mounted = true
 
-    const refresh = () => setCacheBuster(Date.now())
-    refresh()
-
-    // fetch user stats and recent events
     const fetchData = async () => {
       setLoading(true)
       try {
-        const [userRes, eventsRes] = await Promise.all([
-          fetch(`https://api.github.com/users/${username}`),
-          fetch(`https://api.github.com/users/${username}/events/public`)
-        ])
+        const userRes = await fetch(`https://api.github.com/users/${username}`)
 
         if (!mounted) return
 
@@ -33,19 +27,7 @@ const GitHubActivity = () => {
             avatar: userJson.avatar_url
           })
         }
-
-        if (eventsRes.ok) {
-          const eventsJson = await eventsRes.json()
-          // take first 5 relevant event summaries
-          setEvents(eventsJson.slice(0, 6).map(e => {
-            const type = e.type.replace(/Event$/, '')
-            const repo = e.repo?.name || ''
-            const created = new Date(e.created_at).toLocaleDateString()
-            return { type, repo, created }
-          }))
-        }
       } catch (err) {
-        // fail silently, keep existing UI
         console.warn('GitHubActivity fetch error', err)
       } finally {
         if (mounted) setLoading(false)
@@ -54,83 +36,130 @@ const GitHubActivity = () => {
 
     fetchData()
 
-    // refresh every 30 minutes
-    const interval = setInterval(() => {
-      refresh()
-      fetchData()
-    }, 1000 * 60 * 30)
+    // Refresh cache buster every 5 minutes
+    const refreshInterval = setInterval(() => {
+      setCacheBuster(Date.now())
+      setImageKey(prev => prev + 1)
+      setImageError(false)
+    }, 1000 * 60 * 5)
 
-    // also refresh on focus/visibility
-    const handleFocus = () => { refresh(); fetchData() }
-    const handleVisibility = () => { if (!document.hidden) { refresh(); fetchData() } }
+    // Refresh on window focus
+    const handleFocus = () => {
+      setCacheBuster(Date.now())
+      setImageKey(prev => prev + 1)
+      setImageError(false)
+      fetchData()
+    }
 
     window.addEventListener('focus', handleFocus)
-    document.addEventListener('visibilitychange', handleVisibility)
 
     return () => {
       mounted = false
-      clearInterval(interval)
+      clearInterval(refreshInterval)
       window.removeEventListener('focus', handleFocus)
-      document.removeEventListener('visibilitychange', handleVisibility)
     }
   }, [username])
 
+  const handleImageError = () => {
+    setImageError(true)
+    // Retry after 3 seconds
+    setTimeout(() => {
+      setCacheBuster(Date.now())
+      setImageKey(prev => prev + 1)
+      setImageError(false)
+    }, 3000)
+  }
+
+  const handleImageLoad = () => {
+    setImageError(false)
+  }
+
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-bold flex items-center gap-2 text-[var(--text-color)]">
-        <FaGithub className="text-lg" />
-        GitHub Activity
-      </h2>
-
-  <div className="p-4 rounded-lg border bg-[var(--surface-color)] border-[var(--border-color)]">
-        {/* Stats badges */}
-          <div className="flex items-center gap-3 mb-3 flex-wrap">
-          {stats ? (
-            <>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-gray-900/40 text-[var(--text-color)]">
-                <img src={stats.avatar} alt="avatar" className="w-6 h-6 rounded-full" />
-                <span className="text-sm">{username}</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[var(--card-bg)] text-[var(--text-color)]">
-                <strong>{stats.public_repos}</strong>
-                <span className="text-sm">repos</span>
-              </div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[var(--card-bg)] text-[var(--text-color)]">
-                <strong>{stats.followers}</strong>
-                <span className="text-sm">followers</span>
-              </div>
-            </>
-          ) : (
-            <div className="text-sm text-gray-400">GitHub data unavailable</div>
-          )}
+    <div className="rounded-2xl p-6 sm:p-8 border bg-[var(--surface-color)] border-[var(--border-color)]">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <FaGithub className="text-3xl text-[var(--text-color)]" />
+          <h2 className="text-2xl font-bold text-[var(--text-color)]">GitHub Activity</h2>
         </div>
-
-        {/* Recent activity (small list) */}
-        {loading ? (
-          <div className="text-sm text-gray-400 mb-3">Loading recent activity…</div>
-        ) : (
-          events.length > 0 && (
-            <div className="mb-3">
-              <div className="text-sm font-medium mb-2 text-[var(--text-color)]">Recent activity</div>
-              <ul className="text-sm text-[var(--text-secondary)]">
-                {events.map((ev, i) => (
-                  <li key={i} className="mb-1">{ev.type} on <span className="font-medium">{ev.repo}</span> · <span className="text-xs">{ev.created}</span></li>
-                ))}
-              </ul>
-            </div>
-          )
+        {stats && (
+          <a
+            href={`https://github.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[var(--accent-color)] hover:opacity-70 transition-opacity"
+          >
+            @{username}
+          </a>
         )}
-
-        {/* Contribution graph */}
-        <div className="w-full overflow-x-auto">
-          <img
-            src={`https://ghchart.rshah.org/${username}?t=${cacheBuster}`}
-            alt="GitHub Contribution Graph"
-            className="w-full h-auto rounded min-w-[600px]"
-            onError={() => setTimeout(() => setCacheBuster(Date.now()), 5000)}
-          />
-        </div>
       </div>
+
+      {loading ? (
+        <div className="space-y-4">
+          <div className="h-12 bg-[var(--accent-bg)] rounded-lg animate-pulse"></div>
+          <div className="h-32 bg-[var(--accent-bg)] rounded-lg animate-pulse"></div>
+        </div>
+      ) : stats ? (
+        <div className="space-y-6">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
+                  <FaGithub className="text-xl text-blue-400" />
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Repositories</p>
+                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.public_repos}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-400/10 to-blue-500/5 border border-blue-400/20">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-blue-400/20 flex items-center justify-center">
+                  <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Followers</p>
+                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.followers}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)] uppercase tracking-wider">
+              Contribution Activity
+            </h3>
+            <div className="rounded-xl overflow-hidden bg-[var(--bg-color)] p-4">
+              {imageError ? (
+                <div className="flex items-center justify-center h-32 text-[var(--text-secondary)] text-sm">
+                  <div className="text-center">
+                    <div className="w-8 h-8 border-4 border-[var(--accent-color)] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                    <p>Loading contribution graph...</p>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  key={imageKey}
+                  src={`https://ghchart.rshah.org/${username}?cacheBust=${cacheBuster}`}
+                  alt="GitHub Contributions"
+                  className="w-full"
+                  style={{ imageRendering: 'pixelated' }}
+                  onError={handleImageError}
+                  onLoad={handleImageLoad}
+                  loading="lazy"
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center py-8 text-[var(--text-secondary)]">
+          <p>Unable to load GitHub activity</p>
+        </div>
+      )}
     </div>
   )
 }
