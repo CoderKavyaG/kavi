@@ -28,19 +28,15 @@ const Gallery = () => {
   ]
 
   return (
-    <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
-      <div className="max-w-6xl mx-auto px-6 py-12">
-        <h1 className="text-4xl font-bold mb-12" style={{ color: 'var(--text-color)' }}>
-          Gallery
-        </h1>
+  <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <h1 className="text-3xl sm:text-4xl font-bold mb-8 sm:mb-12 text-[var(--text-color)]">Gallery</h1>
         
-        <div className="mb-20">
-          <h2 className="text-2xl font-semibold mb-8" style={{ color: 'var(--text-color)' }}>
-            Profile Pictures
-          </h2>
-          <div className="flex justify-center gap-8">
+        <div className="mb-12 sm:mb-20">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 sm:mb-8 text-[var(--text-color)]">Profile Pictures</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 max-w-2xl mx-auto">
             {profilePictures.map((image, index) => (
-              <div key={index} className="w-56 h-56 rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105">
+              <div key={index} className="w-full aspect-square max-w-xs mx-auto rounded-2xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-105">
                 <img 
                   src={image.src} 
                   alt={image.alt}
@@ -52,10 +48,8 @@ const Gallery = () => {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold mb-8" style={{ color: 'var(--text-color)' }}>
-            My Workspace
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 sm:mb-8 text-[var(--text-color)]">My Workspace</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
             {workspaceImages.map((image, index) => (
               <div key={index} className="aspect-square rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 <img 

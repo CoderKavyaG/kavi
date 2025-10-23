@@ -6,7 +6,6 @@ export const useBlogPosts = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading
     setTimeout(() => {
       setPosts(blogPosts)
       setLoading(false)

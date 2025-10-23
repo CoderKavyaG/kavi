@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ProfilePicture = () => {
-  // Using your existing profile picture temporarily
   const profileImage = 'https://i.ibb.co/LXGvTyqm/image.png'
 
   return (

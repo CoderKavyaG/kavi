@@ -9,14 +9,14 @@ const BlogPost = () => {
   
   if (loading) {
     return (
-      <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
+      <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
         <div className="max-w-3xl mx-auto px-6 py-12">
           <div className="animate-pulse space-y-6">
-            <div className="h-8 rounded w-1/3" style={{ backgroundColor: 'var(--surface-color)' }}></div>
-            <div className="h-64 rounded-lg" style={{ backgroundColor: 'var(--surface-color)' }}></div>
+            <div className="h-8 rounded w-1/3 bg-[var(--surface-color)]"></div>
+            <div className="h-64 rounded-lg bg-[var(--surface-color)]"></div>
             <div className="space-y-3">
-              <div className="h-4 rounded w-full" style={{ backgroundColor: 'var(--surface-color)' }}></div>
-              <div className="h-4 rounded w-5/6" style={{ backgroundColor: 'var(--surface-color)' }}></div>
+              <div className="h-4 rounded w-full bg-[var(--surface-color)]"></div>
+              <div className="h-4 rounded w-5/6 bg-[var(--surface-color)]"></div>
             </div>
           </div>
         </div>
@@ -30,43 +30,38 @@ const BlogPost = () => {
     return <Navigate to="/blog" replace />
   }
 
-  // Special rendering for Winter Arc Journey
   const isWinterArc = post.slug === 'winter-arc-journey'
 
   return (
-    <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        {/* Back Button */}
+    <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <Link 
           to="/blog"
-          className="inline-flex items-center gap-2 mb-8 text-sm hover:opacity-70 transition-opacity duration-200"
-          style={{ color: 'var(--text-secondary)' }}
+          className="inline-flex items-center gap-2 mb-6 sm:mb-8 text-xs sm:text-sm hover:opacity-70 transition-opacity duration-200 text-[var(--text-secondary)]"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
           Back to all blogs
         </Link>
 
-        {/* Cover Image */}
-        <div className="relative h-96 rounded-2xl overflow-hidden mb-8">
+        <div className="relative h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 sm:mb-8">
           <img 
             src={post.coverImage} 
             alt={post.title}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
-          <div className="absolute bottom-0 left-0 right-0 p-8">
-            <h1 className="text-5xl md:text-6xl font-black mb-4 text-white tracking-tight">
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-4 text-white tracking-tight">
               {post.title} {isWinterArc && '❄️'}
             </h1>
-            <p className="text-xl text-gray-200 leading-relaxed max-w-2xl">
+            <p className="text-sm sm:text-base md:text-xl text-gray-200 leading-relaxed max-w-2xl">
               {post.excerpt}
             </p>
           </div>
         </div>
 
-        {/* Meta Info */}
-        <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b" style={{ borderColor: 'var(--border-color)' }}>
-          <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+        <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Calendar className="w-4 h-4" />
             <time dateTime={post.date}>
               {new Date(post.date).toLocaleDateString('en-US', { 
@@ -76,21 +71,17 @@ const BlogPost = () => {
               })}
             </time>
           </div>
-          <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Clock className="w-4 h-4" />
             <span>{post.readTime}</span>
           </div>
           <div className="flex items-center gap-2">
-            <Tag className="w-4 h-4" style={{ color: 'var(--text-secondary)' }} />
+            <Tag className="w-4 h-4 text-[var(--text-secondary)]" />
             <div className="flex gap-2 flex-wrap">
               {post.tags.map((tag) => (
                 <span 
                   key={tag}
-                  className="px-3 py-1 rounded-full text-xs font-medium"
-                  style={{ 
-                    backgroundColor: 'var(--accent-bg)', 
-                    color: 'var(--text-secondary)' 
-                  }}
+                  className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--text-secondary)]"
                 >
                   {tag}
                 </span>
@@ -105,10 +96,10 @@ const BlogPost = () => {
             {/* Goals Section */}
             <section className="space-y-8">
               <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+                <h2 className="text-4xl font-bold mb-4 text-[var(--text-color)]">
                   Winter Arc Goals
                 </h2>
-                <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>
+                <p className="text-lg text-[var(--text-secondary)]">
                   Next 90 Days
                 </p>
               </div>
@@ -116,14 +107,14 @@ const BlogPost = () => {
               {/* Goal Cards */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Skills Goal */}
-                <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                    <Target className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Target className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
                     Acquire Skills
                   </h3>
-                  <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
                     <li className="flex items-start gap-2">
                       <span className="mt-1">•</span>
                       <span>Finish @kirat_tw web-dev cohort and build good projects</span>
@@ -148,14 +139,14 @@ const BlogPost = () => {
                 </div>
 
                 {/* Physical Health Goal */}
-                <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                    <Dumbbell className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Dumbbell className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
                     Body Shape
                   </h3>
-                  <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
                     <li className="flex items-start gap-2">
                       <span className="mt-1">•</span>
                       <span>Muscle building</span>
@@ -176,14 +167,14 @@ const BlogPost = () => {
                 </div>
 
                 {/* Mental Health Goal */}
-                <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
-                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                    <Brain className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Brain className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-color)' }}>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
                     Mental Well-being
                   </h3>
-                  <ul className="space-y-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
                     <li className="flex items-start gap-2">
                       <span className="mt-1">•</span>
                       <span>End my doomscrolling addiction</span>
@@ -200,8 +191,8 @@ const BlogPost = () => {
                 </div>
               </div>
 
-              <div className="text-center py-6 px-8 rounded-xl border-2" style={{ borderColor: 'var(--accent-color)', backgroundColor: 'var(--accent-bg)' }}>
-                <p className="text-lg font-semibold" style={{ color: 'var(--text-color)' }}>
+              <div className="text-center py-6 px-8 rounded-xl border-2 border-[var(--accent-color)] bg-[var(--accent-bg)]">
+                <p className="text-lg font-semibold text-[var(--text-color)]">
                   Next 90 days are kind of unfinished tour of 2025, let's get max out of them!
                 </p>
               </div>
@@ -209,45 +200,43 @@ const BlogPost = () => {
 
             {/* Daily Progress */}
             <section className="space-y-6">
-              <h2 className="text-3xl font-bold mb-8" style={{ color: 'var(--text-color)' }}>
+              <h2 className="text-3xl font-bold mb-8 text-[var(--text-color)]">
                 Daily Progress
               </h2>
 
               {/* Day 3 */}
-              <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
+              <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold" style={{ color: 'var(--text-color)' }}>
-                    Day 3
-                  </h3>
-                  <span className="text-sm px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--text-secondary)' }}>
+                  <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 3</h3>
+                  <span className="text-sm px-3 py-1 rounded-full bg-[var(--accent-bg)] text-[var(--text-secondary)]">
                     October 3, 2025
                   </span>
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
                       <span className="text-xs">😴</span>
                     </div>
                     <div>
-                      <p className="font-medium mb-1" style={{ color: 'var(--text-color)' }}>Sleep</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Bit sick, slept in fragments</p>
+                      <p className="font-medium mb-1 text-[var(--text-color)]">Sleep</p>
+                      <p className="text-sm text-[var(--text-secondary)]">Bit sick, slept in fragments</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                      <Code className="w-3 h-3" style={{ color: 'var(--accent-color)' }} />
+                      <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
+                      <Code className="w-3 h-3 text-[var(--accent-color)]" />
                     </div>
-                    <div>
-                      <p className="font-medium mb-2" style={{ color: 'var(--text-color)' }}>What I Learned</p>
-                      <ul className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      <div>
+                        <p className="font-medium mb-2 text-[var(--text-color)]">What I Learned</p>
+                        <ul className="space-y-1 text-sm text-[var(--text-secondary)]">
                         <li>• API routes in Next.js</li>
                         <li>• Fixed bugs in Spotify component (copyright issues prevented song playback)</li>
                         <li>• Worked on blog component for portfolio</li>
                       </ul>
                     </div>
                   </div>
-                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-color)' }}>
-                    <p className="text-sm italic" style={{ color: 'var(--text-secondary)' }}>
+                  <div className="pt-3 border-t border-[var(--border-color)]">
+                    <p className="text-sm italic text-[var(--text-secondary)]">
                       Sick day, will try to keep momentum up! 💪
                     </p>
                   </div>
@@ -255,41 +244,39 @@ const BlogPost = () => {
               </div>
 
               {/* Day 2 */}
-              <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
+              <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold" style={{ color: 'var(--text-color)' }}>
-                    Day 2
-                  </h3>
-                  <span className="text-sm px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--text-secondary)' }}>
+                  <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 2</h3>
+                  <span className="text-sm px-3 py-1 rounded-full bg-[var(--accent-bg)] text-[var(--text-secondary)]">
                     October 2, 2025
                   </span>
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
                       <span className="text-xs">😴</span>
                     </div>
                     <div>
-                      <p className="font-medium mb-1" style={{ color: 'var(--text-color)' }}>Sleep</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>6hrs of good sleep</p>
+                      <p className="font-medium mb-1 text-[var(--text-color)]">Sleep</p>
+                      <p className="text-sm text-[var(--text-secondary)]">6hrs of good sleep</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
                       <span className="text-xs">🎉</span>
                     </div>
                     <div>
-                      <p className="font-medium mb-1" style={{ color: 'var(--text-color)' }}>Highlights</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Set up my new monitor • Celebrated Dussehra</p>
+                      <p className="font-medium mb-1 text-[var(--text-color)]">Highlights</p>
+                      <p className="text-sm text-[var(--text-secondary)]">Set up my new monitor • Celebrated Dussehra</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                      <Code className="w-3 h-3" style={{ color: 'var(--accent-color)' }} />
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
+                      <Code className="w-3 h-3 text-[var(--accent-color)]" />
                     </div>
                     <div>
-                      <p className="font-medium mb-2" style={{ color: 'var(--text-color)' }}>What I Learned</p>
-                      <ul className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      <p className="font-medium mb-2 text-[var(--text-color)]">What I Learned</p>
+                      <ul className="space-y-1 text-sm text-[var(--text-secondary)]">
                         <li>• Started with Next.js, why it was built</li>
                         <li>• SSR vs CSR, layouts</li>
                         <li>• Read Spotify developer docs</li>
@@ -297,8 +284,8 @@ const BlogPost = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-color)' }}>
-                    <p className="text-sm italic" style={{ color: 'var(--text-secondary)' }}>
+                  <div className="pt-3 border-t border-[var(--border-color)]">
+                    <p className="text-sm italic text-[var(--text-secondary)]">
                       Low progress still managed 6 hrs of grind! 🔥
                     </p>
                   </div>
@@ -306,41 +293,37 @@ const BlogPost = () => {
               </div>
 
               {/* Day 1 */}
-              <div className="p-6 rounded-xl border" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
+              <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-2xl font-bold" style={{ color: 'var(--text-color)' }}>
-                    Day 1
-                  </h3>
-                  <span className="text-sm px-3 py-1 rounded-full" style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--text-secondary)' }}>
-                    October 1, 2025
-                  </span>
+                  <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 1</h3>
+                  <span className="text-sm px-3 py-1 rounded-full bg-[var(--accent-bg)] text-[var(--text-secondary)]">October 1, 2025</span>
                 </div>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
                       <span className="text-xs">😴</span>
                     </div>
                     <div>
-                      <p className="font-medium mb-1" style={{ color: 'var(--text-color)' }}>Sleep</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>8+ hrs of good sleep</p>
+                      <p className="font-medium mb-1 text-[var(--text-color)]">Sleep</p>
+                      <p className="text-sm text-[var(--text-secondary)]">8+ hrs of good sleep</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                      <BookOpen className="w-3 h-3" style={{ color: 'var(--accent-color)' }} />
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
+                      <BookOpen className="w-3 h-3 text-[var(--accent-color)]" />
                     </div>
                     <div>
-                      <p className="font-medium mb-1" style={{ color: 'var(--text-color)' }}>Reading</p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Got a book to start reading</p>
+                      <p className="font-medium mb-1 text-[var(--text-color)]">Reading</p>
+                      <p className="text-sm text-[var(--text-secondary)]">Got a book to start reading</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5" style={{ backgroundColor: 'var(--accent-bg)' }}>
-                      <Code className="w-3 h-3" style={{ color: 'var(--accent-color)' }} />
+                    <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-[var(--accent-bg)]">
+                      <Code className="w-3 h-3 text-[var(--accent-color)]" />
                     </div>
                     <div>
-                      <p className="font-medium mb-2" style={{ color: 'var(--text-color)' }}>What I Learned</p>
-                      <ul className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                      <p className="font-medium mb-2 text-[var(--text-color)]">What I Learned</p>
+                      <ul className="space-y-1 text-sm text-[var(--text-secondary)]">
                         <li>• Latency vs Throughput</li>
                         <li>• CAP theorem</li>
                         <li>• ACID vs BASE</li>
@@ -349,24 +332,22 @@ const BlogPost = () => {
                       </ul>
                     </div>
                   </div>
-                  <div className="pt-3 border-t" style={{ borderColor: 'var(--border-color)' }}>
-                    <p className="text-sm italic" style={{ color: 'var(--text-secondary)' }}>
-                      Not perfect, but arc has started! 🚀
-                    </p>
+                  <div className="pt-3 border-t border-[var(--border-color)]">
+                    <p className="text-sm italic text-[var(--text-secondary)]">Not perfect, but arc has started! 🚀</p>
                   </div>
                 </div>
               </div>
             </section>
 
             {/* Footer */}
-            <div className="text-center py-8 px-6 rounded-xl" style={{ backgroundColor: 'var(--accent-bg)' }}>
-              <p className="text-lg font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+            <div className="text-center py-8 px-6 rounded-xl bg-[var(--accent-bg)]">
+              <p className="text-lg font-medium mb-2 text-[var(--text-color)]">
                 The Journey Continues...
               </p>
-              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-sm text-[var(--text-secondary)]">
                 Follow along as I document every single day of this 90-day transformation. No excuses, just progress.
               </p>
-              <p className="text-xs mt-4" style={{ color: 'var(--text-secondary)' }}>
+              <p className="text-xs mt-4 text-[var(--text-secondary)]">
                 Last Updated: Day 3
               </p>
             </div>
@@ -374,8 +355,7 @@ const BlogPost = () => {
         ) : (
           /* Regular blog content */
           <article 
-            className="prose prose-lg max-w-none"
-            style={{ color: 'var(--text-secondary)' }}
+            className="prose prose-lg max-w-none text-[var(--text-secondary)]"
           >
             <div className="whitespace-pre-wrap leading-relaxed text-base">
               {post.content}
@@ -383,12 +363,10 @@ const BlogPost = () => {
           </article>
         )}
 
-        {/* Divider */}
-        <div className="border-t pt-8 mt-12" style={{ borderColor: 'var(--border-color)' }}>
+        <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
           <Link 
             to="/blog"
-            className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity duration-200"
-            style={{ color: 'var(--accent-color)' }}
+            className="inline-flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity duration-200 text-[var(--accent-color)]"
           >
             <ArrowLeft className="w-4 h-4" />
             View all blogs

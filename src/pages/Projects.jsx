@@ -26,16 +26,16 @@ const Projects = () => {
   ]
 
   return (
-    <main className="pt-20 min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
+  <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
       <div className="max-w-5xl mx-auto px-6 py-16">
         <header className="mb-12 text-center">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <Code2 className="w-6 h-6" style={{ color: 'var(--accent-color)' }} />
-            <h1 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-color)' }}>
+            <Code2 className="w-6 h-6 text-[var(--accent-color)]" />
+            <h1 className="text-3xl md:text-4xl font-bold text-[var(--text-color)]">
               Projects
             </h1>
           </div>
-          <p className="text-base max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-base max-w-xl mx-auto text-[var(--text-secondary)]">
             Building cool stuff and learning in public
           </p>
         </header>
@@ -45,13 +45,9 @@ const Projects = () => {
             {projects.map((project) => (
               <article 
                 key={project.id}
-                className="group rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
-                style={{ 
-                  backgroundColor: 'var(--surface-color)', 
-                  borderColor: 'var(--border-color)'
-                }}
+                className="group rounded-xl overflow-hidden border transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-[var(--surface-color)] border-[var(--border-color)]"
               >
-                <div className="relative h-56 overflow-hidden" style={{ backgroundColor: 'var(--bg-color)' }}>
+                <div className="relative h-56 overflow-hidden bg-[var(--bg-color)]">
                   <img 
                     src={project.image} 
                     alt={project.title}
@@ -63,8 +59,7 @@ const Projects = () => {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200"
-                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+                        className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200 bg-[rgba(0,0,0,0.6)]"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Github className="w-4 h-4 text-white" />
@@ -75,8 +70,7 @@ const Projects = () => {
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200"
-                        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+                        className="p-2 rounded-lg backdrop-blur-sm hover:scale-110 transition-transform duration-200 bg-[rgba(0,0,0,0.6)]"
                         onClick={(e) => e.stopPropagation()}
                       >
                         <Globe className="w-4 h-4 text-white" />
@@ -88,10 +82,10 @@ const Projects = () => {
                 <div className="p-6 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-1" style={{ color: 'var(--text-color)' }}>
+                      <h3 className="text-xl font-bold mb-1 text-[var(--text-color)]">
                         {project.title}
                       </h3>
-                      <p className="text-xs flex items-center gap-1" style={{ color: 'var(--text-secondary)' }}>
+                      <p className="text-xs flex items-center gap-1 text-[var(--text-secondary)]">
                         <Calendar className="w-3 h-3" />
                         {project.date}
                       </p>
@@ -100,8 +94,7 @@ const Projects = () => {
                       <div className="w-2 h-2 rounded-full bg-green-500"></div>
                     </div>
                   </div>
-
-                  <p className="text-sm leading-relaxed line-clamp-3" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm leading-relaxed line-clamp-3 text-[var(--text-secondary)]">
                     {project.description}
                   </p>
 
@@ -109,25 +102,20 @@ const Projects = () => {
                     {project.tags.map((tag) => (
                       <span 
                         key={tag}
-                        className="px-2.5 py-1 rounded-full text-xs font-medium"
-                        style={{ 
-                          backgroundColor: 'var(--accent-bg)', 
-                          color: 'var(--text-secondary)' 
-                        }}
+                        className="px-2 py-1 rounded text-xs bg-[var(--accent-bg)] text-[var(--text-secondary)]"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex gap-3 pt-2 border-t" style={{ borderColor: 'var(--border-color)' }}>
+                  <div className="flex gap-3 pt-2 border-t border-[var(--border-color)]">
                     {project.github && (
                       <a
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-sm font-medium hover:opacity-70 transition-opacity duration-200"
-                        style={{ color: 'var(--text-color)' }}
+                        className="flex items-center gap-1.5 text-sm font-medium hover:opacity-70 transition-opacity duration-200 text-[var(--text-color)]"
                       >
                         <Github className="w-4 h-4" />
                         View Code
@@ -138,8 +126,7 @@ const Projects = () => {
                         href={project.live}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-sm font-medium hover:opacity-70 transition-opacity duration-200"
-                        style={{ color: 'var(--accent-color)' }}
+                        className="flex items-center gap-1.5 text-sm font-medium hover:opacity-70 transition-opacity duration-200 text-[var(--accent-color)]"
                       >
                         <ExternalLink className="w-4 h-4" />
                         Live Demo
@@ -152,11 +139,11 @@ const Projects = () => {
           </div>
         </section>
 
-        <section className="mt-12 text-center py-8 px-6 rounded-xl border max-w-2xl mx-auto" style={{ backgroundColor: 'var(--surface-color)', borderColor: 'var(--border-color)' }}>
-          <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-color)' }}>
+        <section className="mt-12 text-center py-8 px-6 rounded-xl border max-w-2xl mx-auto bg-[var(--surface-color)] border-[var(--border-color)]">
+          <h2 className="text-xl font-bold mb-2 text-[var(--text-color)]">
             More projects coming soon
           </h2>
-          <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-sm mb-4 text-[var(--text-secondary)]">
             Currently building and learning. Check back later for more projects!
           </p>
           <div className="flex gap-3 justify-center">
@@ -164,16 +151,14 @@ const Projects = () => {
               href="https://github.com/coderkavyag"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-80"
-              style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--text-color)' }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-80 bg-[var(--accent-bg)] text-[var(--text-color)]"
             >
               <Github className="w-4 h-4" />
               GitHub
             </a>
-            <a 
+            <a
               href="mailto:codecraftkavya@gmail.com"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-80"
-              style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:opacity-80 bg-[var(--accent-color)] text-white"
             >
               Get in Touch
             </a>

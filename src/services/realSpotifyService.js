@@ -2,11 +2,9 @@ import axios from 'axios';
 
 class SpotifyService {
   constructor() {
-    // Use local direct call for development, API endpoint for production
     this.isDevelopment = import.meta.env.DEV;
   }
 
-  // Get YOUR currently playing track
   async getCurrentlyPlaying() {
     try {
       const response = await axios.get('/api/spotify');

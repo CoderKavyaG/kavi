@@ -53,17 +53,9 @@ const CodingStats = () => {
 
   if (stats.loading) {
     return (
-      <div 
-        className="flex items-center gap-3 px-4 py-3 rounded-lg border"
-        style={{ 
-          backgroundColor: 'var(--surface-color)', 
-          borderColor: 'var(--border-color)'
-        }}
-      >
-        <FaGithub className="text-lg" style={{ color: 'var(--text-secondary)' }} />
-        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Loading...
-        </span>
+      <div className="flex items-center gap-3 px-4 py-3 rounded-lg border bg-[var(--surface-color)] border-[var(--border-color)]">
+        <FaGithub className="text-lg text-[var(--text-secondary)]" />
+        <span className="text-sm text-[var(--text-secondary)]">Loading...</span>
       </div>
     )
   }
@@ -75,25 +67,12 @@ const CodingStats = () => {
 
   const iconColor = hasActivity ? '#10b981' : '#f59e0b'
 
-  return (
-    <div 
-      className="flex items-center gap-3 px-4 py-3 rounded-lg border hover:shadow-sm transition-shadow duration-200"
-      style={{ 
-        backgroundColor: 'var(--surface-color)', 
-        borderColor: 'var(--border-color)'
-      }}
-    >
-      <FaGithub 
-        className="text-lg flex-shrink-0" 
-        style={{ color: iconColor }} 
-      />
+    return (
+    <div className="flex items-center gap-3 px-4 py-3 rounded-lg border hover:shadow-sm transition-shadow duration-200 bg-[var(--surface-color)] border-[var(--border-color)]">
+      <FaGithub className={`text-lg flex-shrink-0 ${hasActivity ? 'text-[var(--accent-color-green,#10b981)]' : 'text-[var(--accent-color-amber,#f59e0b)]'}`} />
       <div className="flex flex-col min-w-0">
-        <span className="text-sm font-medium truncate" style={{ color: 'var(--text-color)' }}>
-          {activityText}
-        </span>
-        <span className="text-xs truncate" style={{ color: 'var(--text-secondary)' }}>
-          {stats.repos} public repos
-        </span>
+        <span className="text-sm font-medium truncate text-[var(--text-color)]">{activityText}</span>
+        <span className="text-xs truncate text-[var(--text-secondary)]">{stats.repos} public repos</span>
       </div>
     </div>
   )

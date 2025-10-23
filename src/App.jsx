@@ -14,7 +14,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router basename="/">
-        <div className="font-sans min-h-screen" style={{ backgroundColor: 'var(--bg-color)', color: 'var(--text-color)' }}>
+        <div className="font-sans min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
