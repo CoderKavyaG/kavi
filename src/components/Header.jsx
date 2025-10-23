@@ -48,25 +48,17 @@ const Header = () => {
           >
             Projects
           </Link>
-          <Link 
-            to="/resume"
-            className={`text-sm transition-colors duration-200 ${
-              isActive('/resume') 
-                ? 'font-medium' 
-                : 'hover:opacity-70'
-            }`}
-            style={{ color: isActive('/resume') ? linkActiveColor : linkColor }}
-          >
-            Resume
-          </Link>
-          <Link 
-            to="/resume"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 hover:opacity-80"
+          <button
+            type="button"
+            disabled
+            aria-disabled="true"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 opacity-60 cursor-not-allowed"
             style={{ backgroundColor: 'var(--accent-color)', color: 'white' }}
+            title="CV coming soon"
           >
             <Download className="w-3.5 h-3.5" />
-            CV
-          </Link>
+            Coming soon
+          </button>
           <button 
             onClick={toggleTheme}
             className="w-7 h-7 rounded-full flex items-center justify-center hover:opacity-70 transition-all duration-200"
