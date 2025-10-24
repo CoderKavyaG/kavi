@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { FaGithub } from 'react-icons/fa'
+import { GitBranch, Users, Trophy, Star, Zap } from 'lucide-react'
 
 const GitHubActivity = () => {
   const username = 'coderkavyag'
@@ -74,90 +74,151 @@ const GitHubActivity = () => {
     setImageError(false)
   }
 
-  return (
-    <div className="rounded-2xl p-6 sm:p-8 border bg-[var(--surface-color)] border-[var(--border-color)]">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <FaGithub className="text-3xl text-[var(--text-color)]" />
-          <h2 className="text-2xl font-bold text-[var(--text-color)]">GitHub Activity</h2>
-        </div>
-        {stats && (
-          <a
-            href={`https://github.com/${username}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm text-[var(--accent-color)] hover:opacity-70 transition-opacity"
-          >
-            @{username}
-          </a>
-        )}
-      </div>
+  // Gaming-style difficulty badge based on repos
+  const getDifficultyLevel = (repos) => {
+    if (repos >= 10) return { label: 'HARD', color: 'red', icon: <Trophy className="w-4 h-4" /> }
+    if (repos >= 5) return { label: 'NORMAL', color: 'yellow', icon: <Star className="w-4 h-4" /> }
+    return { label: 'EASY', color: 'green', icon: <Zap className="w-4 h-4" /> }
+  }
 
+  const difficulty = stats ? getDifficultyLevel(stats.public_repos) : null
+
+  return (
+    <div className="space-y-4">
       {loading ? (
         <div className="space-y-4">
-          <div className="h-12 bg-[var(--accent-bg)] rounded-lg animate-pulse"></div>
-          <div className="h-32 bg-[var(--accent-bg)] rounded-lg animate-pulse"></div>
+          <div className="h-12 border-4 border-[var(--text-color)] animate-pulse bg-[var(--surface-color)]"></div>
+          <div className="h-32 border-4 border-[var(--text-color)] animate-pulse bg-[var(--surface-color)]"></div>
         </div>
       ) : stats ? (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                  <FaGithub className="text-xl text-blue-400" />
+        <>
+          {/* Gaming Stats Header */}
+          <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="border-2 border-[var(--text-color)] p-2 bg-[var(--bg-color)]">
+                  <GitBranch className="w-6 h-6 text-[var(--accent-color)]" />
                 </div>
                 <div>
-                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Repositories</p>
-                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.public_repos}</p>
+                  <h3 className="font-mono font-bold text-sm uppercase text-[var(--text-color)]">
+                    ➤ Player Stats
+                  </h3>
+                  <a
+                    href={`https://github.com/${username}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs font-mono text-[var(--accent-color)] hover:translate-x-0.5 transition-transform inline-block"
+                  >
+                    @{username} →
+                  </a>
                 </div>
               </div>
-            </div>
-
-            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-400/10 to-blue-500/5 border border-blue-400/20">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-blue-400/20 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                  </svg>
+              
+              {/* Difficulty Badge */}
+              {difficulty && (
+                <div className={`flex items-center gap-2 px-3 py-1 border-2 border-[var(--text-color)] font-mono text-xs font-bold ${
+                  difficulty.color === 'red' ? 'bg-red-500/20 text-red-400' :
+                  difficulty.color === 'yellow' ? 'bg-yellow-500/20 text-yellow-400' :
+                  'bg-green-500/20 text-green-400'
+                }`}>
+                  {difficulty.icon}
+                  <span>{difficulty.label}</span>
                 </div>
-                <div>
-                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Followers</p>
-                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.followers}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)] uppercase tracking-wider">
-              Contribution Activity
-            </h3>
-            <div className="rounded-xl overflow-hidden bg-[var(--bg-color)] p-4">
-              {imageError ? (
-                <div className="flex items-center justify-center h-32 text-[var(--text-secondary)] text-sm">
-                  <div className="text-center">
-                    <div className="w-8 h-8 border-4 border-[var(--accent-color)] border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-                    <p>Loading contribution graph...</p>
-                  </div>
-                </div>
-              ) : (
-                <img
-                  key={imageKey}
-                  src={`https://ghchart.rshah.org/${username}?cacheBust=${cacheBuster}`}
-                  alt="GitHub Contributions"
-                  className="w-full"
-                  style={{ imageRendering: 'pixelated' }}
-                  onError={handleImageError}
-                  onLoad={handleImageLoad}
-                  loading="lazy"
-                />
               )}
             </div>
           </div>
-        </div>
+
+          {/* Gaming Stat Cards */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-4 hover:translate-x-1 hover:translate-y-1 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="border-2 border-[var(--accent-color)] bg-[var(--accent-color)]/20 p-2">
+                  <GitBranch className="w-5 h-5 text-[var(--accent-color)]" />
+                </div>
+                <div>
+                  <p className="text-xs font-mono text-[var(--text-secondary)] uppercase">Quests</p>
+                  <p className="text-2xl font-bold font-mono text-[var(--text-color)]">{stats.public_repos}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-4 hover:translate-x-1 hover:translate-y-1 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="border-2 border-[var(--accent-color)] bg-[var(--accent-color)]/20 p-2">
+                  <Users className="w-5 h-5 text-[var(--accent-color)]" />
+                </div>
+                <div>
+                  <p className="text-xs font-mono text-[var(--text-secondary)] uppercase">Allies</p>
+                  <p className="text-2xl font-bold font-mono text-[var(--text-color)]">{stats.followers}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Contribution Heatmap */}
+          <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+            {/* Header */}
+            <div className="bg-[var(--accent-color)] text-black px-4 py-2 border-b-4 border-[var(--text-color)] flex items-center justify-between">
+              <span className="font-mono font-bold text-xs">
+                🎯 BATTLE HISTORY
+              </span>
+              <span className="font-mono text-xs">{new Date().getFullYear()}</span>
+            </div>
+            
+            {/* Content */}
+            {imageError ? (
+              <div className="flex items-center justify-center h-32 sm:h-40 text-[var(--text-secondary)] text-sm p-4">
+                <div className="text-center">
+                  <div className="w-8 h-8 border-4 border-[var(--accent-color)] border-t-transparent animate-spin mx-auto mb-2"></div>
+                  <p className="font-mono text-xs">LOADING MAP...</p>
+                </div>
+              </div>
+            ) : (
+              <div className="p-4 bg-[var(--bg-color)]">
+                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent">
+                  <img
+                    key={imageKey}
+                    src={`https://ghchart.rshah.org/${username}?cacheBust=${cacheBuster}`}
+                    alt="GitHub Contributions"
+                    className="w-full min-w-[600px] sm:min-w-0 opacity-90"
+                    style={{ imageRendering: 'pixelated' }}
+                    onError={handleImageError}
+                    onLoad={handleImageLoad}
+                    loading="lazy"
+                  />
+                </div>
+                
+                {/* Legend */}
+                <div className="flex items-center justify-between mt-3 pt-3 border-t-2 border-dashed border-[var(--border-color)]">
+                  <span className="text-xs font-mono text-[var(--text-secondary)]">
+                    XP GAINED: {stats.public_repos * 150}+
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-mono text-[var(--text-secondary)]">LESS</span>
+                    <div className="flex gap-1">
+                      <div className="w-3 h-3 border border-[var(--text-color)] bg-[var(--surface-color)]"></div>
+                      <div className="w-3 h-3 border border-[var(--text-color)] bg-green-900/40"></div>
+                      <div className="w-3 h-3 border border-[var(--text-color)] bg-green-700/60"></div>
+                      <div className="w-3 h-3 border border-[var(--text-color)] bg-green-500/80"></div>
+                      <div className="w-3 h-3 border border-[var(--text-color)] bg-green-400"></div>
+                    </div>
+                    <span className="text-xs font-mono text-[var(--text-secondary)]">MORE</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Gaming Footer Tip */}
+          <div className="border-2 border-dashed border-[var(--border-color)] p-3 bg-[var(--surface-color)]">
+            <p className="text-xs font-mono text-[var(--text-secondary)] text-center">
+              💡 TIP: Each commit is a battle won! Keep grinding to level up your skills.
+            </p>
+          </div>
+        </>
       ) : (
-        <div className="text-center py-8 text-[var(--text-secondary)]">
-          <p>Unable to load GitHub activity</p>
+        <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-8 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+          <p className="font-mono text-[var(--text-secondary)]">⚠️ CONNECTION LOST</p>
         </div>
       )}
     </div>
