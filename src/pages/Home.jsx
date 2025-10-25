@@ -49,7 +49,7 @@ const Home = () => {
                   TS TypeScript
                 </span>{' '}
                 , and{' '}
-                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-white mx-1 bg-[#47A248]">
+                <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-white mx-1 mt-2 sm:mt-0 bg-[#47A248]">
                   🍃 MongoDB
                 </span>
                 .
