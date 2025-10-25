@@ -94,7 +94,7 @@ const FeaturedThreads = () => {
   }, [theme])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-6">
       {tweetIds.map((tweetId, index) => (
         <div
           key={tweetId}

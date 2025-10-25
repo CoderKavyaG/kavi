@@ -5,10 +5,9 @@ import CodingStats from '../components/CodingStats'
 import FeaturedThreads from '../components/FeaturedThreads'
 import GitHubActivity from '../components/GitHubActivity'
 import ContactModal from '../components/ContactModal'
-import { FaPaperPlane, FaLinkedin, FaGithub, FaEnvelope } from 'react-icons/fa'
-import { FaXTwitter } from 'react-icons/fa6'
+import { FaPaperPlane } from 'react-icons/fa'
 import { useBlogPosts } from '../hooks/useBlogPosts'
-import { Calendar, Clock, ArrowRight, FileText } from 'lucide-react'
+import { Calendar, Clock, ArrowRight, FileText, Github, Twitter, Linkedin, Mail } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
@@ -94,7 +93,9 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="text-xl hover:opacity-70 transition-opacity duration-200 text-[var(--text-color)]"
               >
-                <FaXTwitter />
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
               </a>
               <a 
                 href="https://www.linkedin.com/in/coderkavyag/" 
@@ -102,7 +103,7 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="text-xl hover:opacity-70 transition-opacity duration-200 text-[var(--text-color)]"
               >
-                <FaLinkedin />
+                <Linkedin className="w-5 h-5" />
               </a>
               <a 
                 href="https://github.com/coderkavyag" 
@@ -110,13 +111,13 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="text-xl hover:opacity-70 transition-opacity duration-200 text-[var(--text-color)]"
               >
-                <FaGithub />
+                <Github className="w-5 h-5" />
               </a>
               <a 
                 href="mailto:codecraftkavya@gmail.com"
                 className="text-xl hover:opacity-70 transition-opacity duration-200 text-[var(--text-color)]"
               >
-                <FaEnvelope />
+                <Mail className="w-5 h-5" />
               </a>
             </div>
 

@@ -100,39 +100,47 @@ const GitHubActivity = () => {
         </div>
       ) : stats ? (
         <div className="space-y-6">
-          <div className="grid grid-cols-2 gap-4">
-            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-500/10 to-blue-600/5 border border-blue-500/20">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                  <FaGithub className="text-xl text-blue-400" />
+          <div className="hidden sm:grid grid-cols-2 gap-3">
+            <div className="rounded-xl p-4 bg-[#1a2332] border border-[#2d3e50] hover:border-[#5b8fd1] transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#2d4a6a] flex items-center justify-center flex-shrink-0">
+                    <FaGithub className="text-xl text-[#5b8fd1]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Repositories</p>
+                    <p className="text-2xl font-bold text-white leading-tight mt-0.5">{stats.public_repos}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Repositories</p>
-                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.public_repos}</p>
-                </div>
+                <span className="text-[9px] px-2 py-1 bg-[#2d4a6a] text-[#5b8fd1] rounded-md font-semibold uppercase tracking-wider">Public</span>
               </div>
             </div>
 
-            <div className="rounded-xl p-5 bg-gradient-to-br from-blue-400/10 to-blue-500/5 border border-blue-400/20">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-blue-400/20 flex items-center justify-center">
-                  <svg className="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
-                  </svg>
+            <a 
+              href={`https://github.com/${username}?tab=followers`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl p-4 bg-[#1a2332] border border-[#2d3e50] hover:border-[#5b8fd1] transition-colors group"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-[#2d4a6a] flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-[#5b8fd1]" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                    </svg>
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Followers</p>
+                    <p className="text-2xl font-bold text-white leading-tight mt-0.5">{stats.followers}</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">Followers</p>
-                  <p className="text-2xl font-bold text-[var(--text-color)]">{stats.followers}</p>
-                </div>
+                <span className="text-[9px] px-2 py-1 bg-[#5b8fd1] text-white rounded-md font-semibold uppercase tracking-wider group-hover:bg-[#4a7ec1] transition-colors">Follow Me</span>
               </div>
-            </div>
+            </a>
           </div>
 
           <div>
-            <h3 className="text-sm font-semibold mb-3 text-[var(--text-secondary)] uppercase tracking-wider">
-              Contribution Activity
-            </h3>
-            <div className="rounded-xl overflow-hidden bg-[var(--bg-color)] p-4">
+            <div className="rounded-xl overflow-hidden bg-[#0d1117] border-2 border-[#2d3e50] p-6">
               {imageError ? (
                 <div className="flex items-center justify-center h-32 text-[var(--text-secondary)] text-sm">
                   <div className="text-center">
@@ -152,6 +160,20 @@ const GitHubActivity = () => {
                   loading="lazy"
                 />
               )}
+              <div className="mt-4 flex items-center justify-between text-xs text-gray-500">
+                <span>XP GAINED: 1050+</span>
+                <div className="flex items-center gap-2">
+                  <span>LESS</span>
+                  <div className="flex gap-1">
+                    <div className="w-3 h-3 bg-[#161b22] border border-[#2d3e50]"></div>
+                    <div className="w-3 h-3 bg-[#0e4429]"></div>
+                    <div className="w-3 h-3 bg-[#006d32]"></div>
+                    <div className="w-3 h-3 bg-[#26a641]"></div>
+                    <div className="w-3 h-3 bg-[#39d353]"></div>
+                  </div>
+                  <span>MORE</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
