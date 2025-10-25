@@ -10,6 +10,7 @@ import BlogPost from './pages/BlogPost'
 import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
 import Resume from './pages/Resume'
+import CompLoader2 from './pages/CompLoader2'
 
 // ScrollToTop component
 function ScrollToTop() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/resume" element={<Resume />} />
+            <Route path="/comp-loader" element={<CompLoader2 />} />
           </Routes>
           <Footer />
         </div>
