@@ -2,6 +2,8 @@ import React from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useBlogPosts } from '../hooks/useBlogPosts'
 import { Calendar, Clock, ArrowLeft, Tag, Target, Heart, Brain, Dumbbell, BookOpen, Code } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
 
 const BlogPost = () => {
   const { slug } = useParams()
@@ -354,12 +356,29 @@ const BlogPost = () => {
           </article>
         ) : (
           /* Regular blog content */
-          <article 
-            className="prose prose-lg max-w-none text-[var(--text-secondary)]"
-          >
-            <div className="whitespace-pre-wrap leading-relaxed text-base">
+          <article className="max-w-none text-[var(--text-secondary)]">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}
+              components={{
+                h1: ({node, ...props}) => <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-color)] mb-4" {...props} />,
+                h2: ({node, ...props}) => <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-color)] mt-8 mb-3" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-xl sm:text-2xl font-semibold text-[var(--text-color)] mt-6 mb-2" {...props} />,
+                p: ({node, ...props}) => <p className="leading-relaxed mb-4" {...props} />,
+                ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-1 mb-4" {...props} />,
+                ol: ({node, ...props}) => <ol className="list-decimal pl-6 space-y-1 mb-4" {...props} />,
+                li: ({node, ...props}) => <li className="leading-relaxed" {...props} />,
+                code: ({node, inline, className, children, ...props}) => (
+                  <code className={`rounded bg-[var(--surface-color)] px-1.5 py-0.5 ${className || ''}`} {...props}>{children}</code>
+                ),
+                pre: ({node, ...props}) => (
+                  <pre className="rounded-lg bg-[var(--surface-color)] border border-[var(--border-color)] p-4 overflow-x-auto mb-4" {...props} />
+                ),
+                blockquote: ({node, ...props}) => (
+                  <blockquote className="border-l-4 border-[var(--accent-color)]/60 pl-4 italic mb-4" {...props} />
+                )
+              }}
+            >
               {post.content}
-            </div>
+            </ReactMarkdown>
           </article>
         )}
 
