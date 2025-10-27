@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { ThemeProvider } from './contexts/ThemeContext'
 import Header from './components/Header'
@@ -35,6 +36,7 @@ function App() {
       <Router basename="/">
         <ScrollToTop />
         <div className="font-sans min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
+          <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
           {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
           <Header />
           <Routes>

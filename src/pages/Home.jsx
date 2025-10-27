@@ -12,7 +12,9 @@ import { Link } from 'react-router-dom'
 
 const Home = () => {
   const { posts, loading } = useBlogPosts()
-  const latestPosts = posts.slice(0, 1)
+  // Always feature the Mandela Effect blog on top
+  const mandelaPost = posts.find(p => p.slug === 'ai-mandela-effect-pikachu-tail')
+  const latestPosts = mandelaPost ? [mandelaPost] : posts.slice(0, 1)
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   const techStack = [

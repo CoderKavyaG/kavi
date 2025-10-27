@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { db, ensureAnonSignIn } from '../services/firebase'
 import { collection, doc, getDoc, setDoc, query, getCountFromServer } from 'firebase/firestore'
+import toast from 'react-hot-toast'
 
 // A minimal like button that allows one like per anonymous user per post.
 // Usage: <LikeButton slug={post.slug} />
@@ -50,6 +51,7 @@ export default function LikeButton({ slug, className = '' }) {
       await setDoc(likeRef, { createdAt: new Date().toISOString() })
       setLiked(true)
       setCount(c => c + 1)
+      toast.success('Glad you loved blog! Keep reading')
     } catch (e) {
       console.error('Like click failed:', e)
     } finally {
@@ -72,7 +74,14 @@ export default function LikeButton({ slug, className = '' }) {
       title={liked ? 'You liked this' : 'Like this post'}
     >
       <span aria-hidden>❤️</span>
-      <span className="tabular-nums">{loading ? '…' : count}</span>
+      {loading ? (
+        <svg className="animate-spin h-4 w-4 text-gray-400" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+        </svg>
+      ) : (
+        <span className="tabular-nums">{count}</span>
+      )}
       {liked ? <span className="text-xs opacity-70">(liked)</span> : null}
     </button>
   )
