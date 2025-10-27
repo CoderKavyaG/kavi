@@ -64,7 +64,7 @@ const BlogPost = () => {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
+  <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Calendar className="w-4 h-4" />
             <time dateTime={post.date}>
