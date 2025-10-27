@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useBlogPosts } from '../hooks/useBlogPosts'
 import { Calendar, ArrowRight, Clock } from 'lucide-react'
 
-// naive reading time (words / 220 wpm)
 const getReadingTime = (post) => {
   if (post.readTime && typeof post.readTime === 'string' && /\D/.test(post.readTime)) {
     return post.readTime
@@ -56,11 +55,9 @@ const Blog = () => {
               to={`/blog/${post.slug}`}
               className="group relative rounded-2xl transition-all duration-300 hover:-translate-y-1"
             >
-              {/* subtle gradient ring */}
               <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-[var(--accent-color)]/40 via-transparent to-transparent opacity-60 group-hover:opacity-100 blur-[1px]" aria-hidden="true"></div>
 
               <div className="relative rounded-2xl overflow-hidden border bg-[var(--surface-color)] border-[var(--border-color)]">
-                {/* Media */}
                 <div className="relative h-56 overflow-hidden">
                   <img 
                     src={post.coverImage} 
@@ -73,11 +70,12 @@ const Blog = () => {
                   </h2>
                 </div>
 
-                {/* Content */}
                 <div className="p-6 space-y-4">
-                  <p className="text-base leading-relaxed text-[var(--text-secondary)] line-clamp-3">
-                    {post.excerpt}
-                  </p>
+                  {post.excerpt && post.excerpt.trim().length > 0 && (
+                    <p className="text-base leading-relaxed text-[var(--text-secondary)] line-clamp-3">
+                      {post.excerpt}
+                    </p>
+                  )}
 
                   <div className="flex gap-2 flex-wrap">
                     {post.tags.map((tag) => (
@@ -118,7 +116,7 @@ const Blog = () => {
           ))}
         </div>
 
-        {/* Footer note or future pagination controls could go here */}
+        
       </div>
     </main>
   )
