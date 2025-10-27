@@ -4,6 +4,7 @@ import { useBlogPosts } from '../hooks/useBlogPosts'
 import { Calendar, Clock, ArrowLeft, Tag, Target, Heart, Brain, Dumbbell, BookOpen, Code } from 'lucide-react'
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
+import LikeButton from '../components/LikeButton'
 
 const BlogPost = () => {
   const { slug } = useParams()
@@ -64,7 +65,7 @@ const BlogPost = () => {
           </div>
         </div>
 
-  <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
+        <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Calendar className="w-4 h-4" />
             <time dateTime={post.date}>
@@ -91,6 +92,9 @@ const BlogPost = () => {
                 </span>
               ))}
             </div>
+          </div>
+          <div className="ml-auto">
+            <LikeButton slug={post.slug} />
           </div>
         </div>
 
