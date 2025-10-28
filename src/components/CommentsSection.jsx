@@ -88,15 +88,18 @@ const CommentsSection = ({ postId }) => {
   };
 
   return (
-    <section ref={sectionRef} className="comments-section mt-16 max-w-2xl mx-auto">
+    <section
+      ref={sectionRef}
+      className="comments-section mt-16 max-w-2xl mx-auto px-2 sm:px-4"
+    >
       {/* Header: comment count and sort */}
-      <div className="flex items-center justify-between mb-6 border-b border-[var(--border-color)] pb-4">
-        <div className="flex items-center gap-3">
-          <span className="text-2xl font-bold text-[var(--text-color)]">{comments.length.toLocaleString()} Comments</span>
-        </div>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 border-b border-[var(--border-color)] pb-6 gap-4">
+        <span className="text-2xl sm:text-3xl font-extrabold text-[var(--text-color)] tracking-tight">
+          {comments.length.toLocaleString()} Comments
+        </span>
         <div className="relative">
           <button
-            className="flex items-center gap-1 text-sm font-medium text-[var(--accent-color)] bg-white/5 px-3 py-1.5 rounded hover:bg-white/10 transition focus:outline-none"
+            className="flex items-center gap-1 text-sm font-semibold text-[var(--accent-color)] bg-[var(--surface-color)] px-4 py-2 rounded-lg hover:bg-[var(--accent-bg)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] transition-all duration-200"
             tabIndex={0}
             onClick={() => setShowSortDropdown((v) => !v)}
             type="button"
@@ -108,9 +111,9 @@ const CommentsSection = ({ postId }) => {
           </button>
           {/* Dropdown */}
           {showSortDropdown && (
-            <ul className="absolute right-0 mt-2 w-40 bg-[var(--surface-color)] border border-[var(--border-color)] rounded shadow z-10" role="listbox">
+            <ul className="absolute right-0 mt-2 w-44 bg-[var(--surface-color)] border border-[var(--border-color)] rounded-lg shadow-lg z-10 animate-fade-in" role="listbox">
               <li
-                className={`px-4 py-2 cursor-pointer hover:bg-[var(--accent-bg)] ${sortOrder === "desc" ? "font-semibold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
+                className={`px-4 py-2 cursor-pointer rounded hover:bg-[var(--accent-bg)] transition-all duration-150 ${sortOrder === "desc" ? "font-bold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
                 onClick={() => { setSortOrder("desc"); setShowSortDropdown(false); }}
                 role="option"
                 aria-selected={sortOrder === "desc"}
@@ -118,7 +121,7 @@ const CommentsSection = ({ postId }) => {
                 Most Recent
               </li>
               <li
-                className={`px-4 py-2 cursor-pointer hover:bg-[var(--accent-bg)] ${sortOrder === "asc" ? "font-semibold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
+                className={`px-4 py-2 cursor-pointer rounded hover:bg-[var(--accent-bg)] transition-all duration-150 ${sortOrder === "asc" ? "font-bold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
                 onClick={() => { setSortOrder("asc"); setShowSortDropdown(false); }}
                 role="option"
                 aria-selected={sortOrder === "asc"}
@@ -130,11 +133,14 @@ const CommentsSection = ({ postId }) => {
         </div>
       </div>
       {/* Add comment */}
-      <form onSubmit={handleSubmit} className="flex items-start gap-4 mb-10">
+      <form
+        onSubmit={handleSubmit}
+        className="flex items-start gap-4 mb-12 bg-[var(--surface-color)] rounded-xl p-4 shadow-sm border border-[var(--border-color)]"
+      >
         <img
           src={`https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(username)}`}
           alt={username + " avatar"}
-          className="w-10 h-10 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow"
+          className="w-12 h-12 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow-md transition-transform duration-200 hover:scale-105"
           loading="lazy"
           style={{ background: '#fff' }}
         />
@@ -146,12 +152,12 @@ const CommentsSection = ({ postId }) => {
             placeholder="Add a comment..."
             required
             rows={2}
-            className="w-full p-3 rounded-lg border border-[var(--border-color)] bg-white/10 text-[var(--text-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] mb-2 resize-none"
+            className="w-full p-3 rounded-lg border border-[var(--border-color)] bg-white/10 text-[var(--text-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] mb-2 resize-none text-base transition-all duration-200"
           />
           <div className="flex justify-end">
             <button
               type="submit"
-              className="px-6 py-2 rounded-lg bg-[var(--accent-color)] text-white font-semibold shadow hover:opacity-90 transition"
+              className="px-6 py-2 rounded-lg bg-[var(--accent-color)] text-white font-semibold shadow hover:opacity-90 focus:ring-2 focus:ring-[var(--accent-color)] transition-all duration-200"
             >
               Comment
             </button>
@@ -160,35 +166,44 @@ const CommentsSection = ({ postId }) => {
       </form>
       {/* Comments list */}
       {loading ? (
-        <div className="text-center py-8 text-lg text-gray-400">Loading comments...</div>
+        <div className="text-center py-8 text-lg text-[var(--text-secondary)]">Loading comments...</div>
       ) : comments.length === 0 ? (
-        <div className="text-center py-8 text-gray-400">No comments yet. Be the first to comment!</div>
+        <div className="text-center py-8 text-[var(--text-secondary)]">No comments yet. Be the first to comment!</div>
       ) : (
         <ul className="space-y-8">
           {comments.map((comment) => (
-            <li key={comment.id} className="flex items-start gap-4 group">
+            <li
+              key={comment.id}
+              className="flex items-start gap-4 group animate-fade-in"
+            >
               <img
                 src={`https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(comment.username)}`}
                 alt={comment.username + " avatar"}
-                className="w-10 h-10 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow"
+                className="w-12 h-12 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow-md transition-transform duration-200 group-hover:scale-105"
                 loading="lazy"
                 style={{ background: '#fff' }}
               />
-              <div className="flex-1 border-b border-[var(--border-color)] pb-6 relative">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="font-semibold text-[var(--accent-color)] hover:underline cursor-pointer">{comment.username}</span>
-                  <span className="text-xs text-gray-400">{new Date(comment.timestamp).toLocaleString()}</span>
+              <div className="flex-1 border-b border-[var(--border-color)] pb-6 relative bg-[var(--surface-color)] rounded-xl px-4 pt-3 pb-4 shadow-sm">
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="font-semibold text-[var(--accent-color)] hover:underline cursor-pointer text-base">
+                    {comment.username}
+                  </span>
+                  <span className="text-xs text-[var(--text-secondary)]">
+                    {new Date(comment.timestamp).toLocaleString()}
+                  </span>
                   {comment.uid === userUid && (
                     <button
                       onClick={() => handleDelete(comment.id)}
-                      className="ml-2 text-xs text-red-500 hover:underline opacity-80 group-hover:opacity-100 transition"
+                      className="ml-2 text-xs text-red-500 hover:underline opacity-80 group-hover:opacity-100 transition-all duration-150"
                       title="Delete comment"
                     >
                       Delete
                     </button>
                   )}
                 </div>
-                <div className="text-[var(--text-color)] text-base break-words whitespace-pre-line">{comment.text}</div>
+                <div className="text-[var(--text-color)] text-base break-words whitespace-pre-line leading-relaxed">
+                  {comment.text}
+                </div>
               </div>
             </li>
           ))}

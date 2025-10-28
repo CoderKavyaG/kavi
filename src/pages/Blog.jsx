@@ -48,31 +48,31 @@ const Blog = () => {
           <p className="text-[var(--text-secondary)] max-w-2xl">Stories and notes from building products, learning in public, and the Winter Arc journey.</p>
         </header>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           {posts.map((post) => (
             <Link
               key={post.id}
               to={`/blog/${post.slug}`}
-              className="group relative rounded-2xl transition-all duration-300 hover:-translate-y-1"
+              className="group relative rounded-3xl transition-all duration-300 hover:-translate-y-2 focus:-translate-y-2 shadow-sm hover:shadow-xl focus:shadow-xl outline-none"
             >
-              <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-br from-[var(--accent-color)]/40 via-transparent to-transparent opacity-60 group-hover:opacity-100 blur-[1px]" aria-hidden="true"></div>
+              <div className="absolute -inset-[2px] rounded-3xl bg-gradient-to-br from-[var(--accent-color)]/40 via-transparent to-transparent opacity-60 group-hover:opacity-100 blur-[2px] pointer-events-none transition-all duration-300" aria-hidden="true"></div>
 
-              <div className="relative rounded-2xl overflow-hidden border bg-[var(--surface-color)] border-[var(--border-color)]">
-                <div className="relative h-56 overflow-hidden">
+              <div className="relative rounded-3xl overflow-hidden border bg-[var(--surface-color)] border-[var(--border-color)] transition-all duration-300">
+                <div className="relative h-56 sm:h-64 overflow-hidden">
                   <img 
                     src={post.coverImage} 
                     alt={post.title}
-                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover opacity-90 group-hover:scale-105 group-focus:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/60"></div>
-                  <h2 className="absolute bottom-3 left-4 right-4 text-2xl md:text-3xl font-extrabold text-white tracking-tight">
+                  <h2 className="absolute bottom-4 left-5 right-5 text-2xl md:text-3xl font-extrabold text-white tracking-tight drop-shadow-lg">
                     {post.title}
                   </h2>
                 </div>
 
-                <div className="p-6 space-y-4">
+                <div className="p-7 space-y-5">
                   {post.excerpt && post.excerpt.trim().length > 0 && (
-                    <p className="text-base leading-relaxed text-[var(--text-secondary)] line-clamp-3">
+                    <p className="text-base md:text-lg leading-relaxed text-[var(--text-secondary)] line-clamp-3">
                       {post.excerpt}
                     </p>
                   )}
@@ -81,7 +81,7 @@ const Blog = () => {
                     {post.tags.map((tag) => (
                       <span 
                         key={tag}
-                        className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--text-secondary)]"
+                        className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--accent-color)] border border-[var(--accent-color)]/20 shadow-sm"
                       >
                         {tag}
                       </span>
@@ -105,7 +105,7 @@ const Blog = () => {
 
                   <div className="flex items-center justify-end">
                     <span 
-                      className="inline-flex items-center gap-1 text-sm font-semibold group-hover:gap-2 transition-all duration-200 text-[var(--accent-color)]"
+                      className="inline-flex items-center gap-1 text-sm font-semibold group-hover:gap-3 group-focus:gap-3 transition-all duration-200 text-[var(--accent-color)]"
                     >
                       Read <ArrowRight className="w-4 h-4" />
                     </span>
