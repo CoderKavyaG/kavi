@@ -65,20 +65,31 @@ const CommentsSection = ({ postId }) => {
 
   return (
     <section className="comments-section mt-16 max-w-2xl mx-auto">
-      <h3 className="text-2xl font-bold mb-6 text-[var(--accent-color)] text-center tracking-tight">Comments</h3>
-      <div className="mb-6 text-sm text-[var(--text-secondary)] text-center">
-        <span className="opacity-70">Your username:</span> <span className="font-semibold">{username}</span>
-      </div>
-      <form onSubmit={handleSubmit} className="flex items-start gap-4 mb-10">
-        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent-color)] to-[var(--accent-bg)] flex items-center justify-center text-white font-bold text-lg select-none">
-          {username.slice(0,2).toUpperCase()}
+      {/* Header: comment count and sort */}
+      <div className="flex items-center justify-between mb-6 border-b border-[var(--border-color)] pb-4">
+        <div className="flex items-center gap-3">
+          <span className="text-2xl font-bold text-[var(--text-color)]">{comments.length.toLocaleString()} Comments</span>
         </div>
+        <button className="flex items-center gap-1 text-sm font-medium text-[var(--accent-color)] bg-white/5 px-3 py-1.5 rounded hover:bg-white/10 transition">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M6 12h12m-9 6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+          Sort by
+        </button>
+      </div>
+      {/* Add comment */}
+      <form onSubmit={handleSubmit} className="flex items-start gap-4 mb-10">
+        <img
+          src={`https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(username)}`}
+          alt={username + " avatar"}
+          className="w-10 h-10 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow"
+          loading="lazy"
+          style={{ background: '#fff' }}
+        />
         <div className="flex-1">
           <textarea
             id="comment-textarea"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Add a public comment..."
+            placeholder="Add a comment..."
             required
             rows={2}
             className="w-full p-3 rounded-lg border border-[var(--border-color)] bg-white/10 text-[var(--text-color)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-color)] mb-2 resize-none"
@@ -93,6 +104,7 @@ const CommentsSection = ({ postId }) => {
           </div>
         </div>
       </form>
+      {/* Comments list */}
       {loading ? (
         <div className="text-center py-8 text-lg text-gray-400">Loading comments...</div>
       ) : comments.length === 0 ? (
@@ -101,12 +113,16 @@ const CommentsSection = ({ postId }) => {
         <ul className="space-y-8">
           {comments.map((comment) => (
             <li key={comment.id} className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-[var(--accent-color)] to-[var(--accent-bg)] flex items-center justify-center text-white font-bold text-lg select-none">
-                {comment.username.slice(0,2).toUpperCase()}
-              </div>
+              <img
+                src={`https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(comment.username)}`}
+                alt={comment.username + " avatar"}
+                className="w-10 h-10 rounded-full border-2 border-[var(--accent-color)] bg-white object-cover shadow"
+                loading="lazy"
+                style={{ background: '#fff' }}
+              />
               <div className="flex-1 border-b border-[var(--border-color)] pb-6">
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="font-semibold text-[var(--accent-color)]">{comment.username}</span>
+                  <span className="font-semibold text-[var(--accent-color)] hover:underline cursor-pointer">{comment.username}</span>
                   <span className="text-xs text-gray-400">{new Date(comment.timestamp).toLocaleString()}</span>
                 </div>
                 <div className="text-[var(--text-color)] text-base break-words whitespace-pre-line">{comment.text}</div>
