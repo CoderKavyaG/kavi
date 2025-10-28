@@ -5,6 +5,7 @@ import { Calendar, Clock, ArrowLeft, Tag, Target, Heart, Brain, Dumbbell, BookOp
 import ReactMarkdown from 'react-markdown'
 import rehypeHighlight from 'rehype-highlight'
 import LikeButton from '../components/LikeButton'
+import CommentsSection from '../components/CommentsSection'
 
 const BlogPost = () => {
   const { slug } = useParams()
@@ -38,7 +39,7 @@ const BlogPost = () => {
   return (
     <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <Link 
+        <Link
           to="/blog"
           className="inline-flex items-center gap-2 mb-6 sm:mb-8 text-xs sm:text-sm hover:opacity-70 transition-opacity duration-200 text-[var(--text-secondary)]"
         >
@@ -47,8 +48,8 @@ const BlogPost = () => {
         </Link>
 
         <div className="relative h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 sm:mb-8">
-          <img 
-            src={post.coverImage} 
+          <img
+            src={post.coverImage}
             alt={post.title}
             className="w-full h-full object-cover"
           />
@@ -69,10 +70,10 @@ const BlogPost = () => {
           <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
             <Calendar className="w-4 h-4" />
             <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString('en-US', { 
-                month: 'long', 
-                day: 'numeric', 
-                year: 'numeric' 
+              {new Date(post.date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
               })}
             </time>
           </div>
@@ -84,7 +85,7 @@ const BlogPost = () => {
             <Tag className="w-4 h-4 text-[var(--text-secondary)]" />
             <div className="flex gap-2 flex-wrap">
               {post.tags.map((tag) => (
-                <span 
+                <span
                   key={tag}
                   className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--text-secondary)]"
                 >
@@ -98,10 +99,8 @@ const BlogPost = () => {
           </div>
         </div>
 
-        
         {isWinterArc ? (
           <article className="space-y-12">
-            
             <section className="space-y-8">
               <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold mb-4 text-[var(--text-color)]">
@@ -111,7 +110,6 @@ const BlogPost = () => {
                   Next 90 Days
                 </p>
               </div>
-
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
@@ -425,6 +423,7 @@ const BlogPost = () => {
           </article>
         )}
 
+
         <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
           <Link 
             to="/blog"
@@ -433,6 +432,10 @@ const BlogPost = () => {
             <ArrowLeft className="w-4 h-4" />
             View all blogs
           </Link>
+        </div>
+        {/* Comments Section */}
+        <div className="max-w-4xl mx-auto px-4 pb-12">
+          <CommentsSection postId={post.slug} />
         </div>
       </div>
     </main>
