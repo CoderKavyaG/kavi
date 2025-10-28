@@ -1,8 +1,6 @@
-
-
-import React, { useState, useEffect } from "react";
-import { db, ensureAnonSignIn } from "../services/firebase";
-import { collection, addDoc, query, where, orderBy, onSnapshot } from "firebase/firestore";
+import React, { useState, useEffect, useRef } from "react";
+import { db, ensureAnonSignIn, auth } from "../services/firebase";
+import { collection, addDoc, query, where, orderBy, onSnapshot, deleteDoc, doc } from "firebase/firestore";
 
 // Helper to generate a random username
 function generateRandomUsername() {
@@ -14,14 +12,17 @@ function generateRandomUsername() {
   return `${adj}${animal}${number}`;
 }
 
-
 const CommentsSection = ({ postId }) => {
   const [comments, setComments] = useState([]);
+  const [sortOrder, setSortOrder] = useState("desc"); // "desc" = most recent, "asc" = oldest
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
+  const [showSortDropdown, setShowSortDropdown] = useState(false);
+  const sectionRef = useRef(null);
+  const [userUid, setUserUid] = useState("");
 
-  // Set or get unique username on mount
+  // Set or get unique username on mount, and get user UID
   useEffect(() => {
     let stored = localStorage.getItem("username");
     if (!stored) {
@@ -29,6 +30,10 @@ const CommentsSection = ({ postId }) => {
       localStorage.setItem("username", stored);
     }
     setUsername(stored);
+    // Get Firebase Auth UID
+    ensureAnonSignIn().then((user) => {
+      setUserUid(user.uid);
+    });
   }, []);
 
   // Ensure anon sign-in and fetch comments for this post in real-time
@@ -39,7 +44,7 @@ const CommentsSection = ({ postId }) => {
       const q = query(
         collection(db, "comments"),
         where("postId", "==", postId),
-        orderBy("timestamp", "desc")
+        orderBy("timestamp", sortOrder)
       );
       unsub = onSnapshot(q, (snapshot) => {
         setComments(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
@@ -47,33 +52,82 @@ const CommentsSection = ({ postId }) => {
       });
     });
     return () => { if (unsub) unsub(); };
-  }, [postId]);
+  }, [postId, sortOrder]);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    if (!showSortDropdown) return;
+    const handler = (e) => {
+      if (sectionRef.current && !sectionRef.current.contains(e.target)) {
+        setShowSortDropdown(false);
+      }
+    };
+    window.addEventListener('mousedown', handler);
+    return () => window.removeEventListener('mousedown', handler);
+  }, [showSortDropdown]);
 
   // Add new comment to Firestore
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
-    await ensureAnonSignIn();
+    const user = await ensureAnonSignIn();
     await addDoc(collection(db, "comments"), {
       postId,
       username,
       text: newComment,
-      timestamp: Date.now()
+      timestamp: Date.now(),
+      uid: user.uid
     });
     setNewComment("");
   };
 
+  // Delete comment
+  const handleDelete = async (commentId) => {
+    if (!window.confirm("Are you sure you want to delete this comment?")) return;
+    await deleteDoc(doc(db, "comments", commentId));
+  };
+
   return (
-    <section className="comments-section mt-16 max-w-2xl mx-auto">
+    <section ref={sectionRef} className="comments-section mt-16 max-w-2xl mx-auto">
       {/* Header: comment count and sort */}
       <div className="flex items-center justify-between mb-6 border-b border-[var(--border-color)] pb-4">
         <div className="flex items-center gap-3">
           <span className="text-2xl font-bold text-[var(--text-color)]">{comments.length.toLocaleString()} Comments</span>
         </div>
-        <button className="flex items-center gap-1 text-sm font-medium text-[var(--accent-color)] bg-white/5 px-3 py-1.5 rounded hover:bg-white/10 transition">
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M6 12h12m-9 6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-          Sort by
-        </button>
+        <div className="relative">
+          <button
+            className="flex items-center gap-1 text-sm font-medium text-[var(--accent-color)] bg-white/5 px-3 py-1.5 rounded hover:bg-white/10 transition focus:outline-none"
+            tabIndex={0}
+            onClick={() => setShowSortDropdown((v) => !v)}
+            type="button"
+            aria-haspopup="listbox"
+            aria-expanded={showSortDropdown ? "true" : "false"}
+          >
+            <svg width="18" height="18" fill="none" viewBox="0 0 24 24"><path d="M3 6h18M6 12h12m-9 6h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+            Sort by
+          </button>
+          {/* Dropdown */}
+          {showSortDropdown && (
+            <ul className="absolute right-0 mt-2 w-40 bg-[var(--surface-color)] border border-[var(--border-color)] rounded shadow z-10" role="listbox">
+              <li
+                className={`px-4 py-2 cursor-pointer hover:bg-[var(--accent-bg)] ${sortOrder === "desc" ? "font-semibold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
+                onClick={() => { setSortOrder("desc"); setShowSortDropdown(false); }}
+                role="option"
+                aria-selected={sortOrder === "desc"}
+              >
+                Most Recent
+              </li>
+              <li
+                className={`px-4 py-2 cursor-pointer hover:bg-[var(--accent-bg)] ${sortOrder === "asc" ? "font-semibold text-[var(--accent-color)]" : "text-[var(--text-color)]"}`}
+                onClick={() => { setSortOrder("asc"); setShowSortDropdown(false); }}
+                role="option"
+                aria-selected={sortOrder === "asc"}
+              >
+                Oldest
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
       {/* Add comment */}
       <form onSubmit={handleSubmit} className="flex items-start gap-4 mb-10">
@@ -112,7 +166,7 @@ const CommentsSection = ({ postId }) => {
       ) : (
         <ul className="space-y-8">
           {comments.map((comment) => (
-            <li key={comment.id} className="flex items-start gap-4">
+            <li key={comment.id} className="flex items-start gap-4 group">
               <img
                 src={`https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(comment.username)}`}
                 alt={comment.username + " avatar"}
@@ -120,10 +174,19 @@ const CommentsSection = ({ postId }) => {
                 loading="lazy"
                 style={{ background: '#fff' }}
               />
-              <div className="flex-1 border-b border-[var(--border-color)] pb-6">
+              <div className="flex-1 border-b border-[var(--border-color)] pb-6 relative">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-semibold text-[var(--accent-color)] hover:underline cursor-pointer">{comment.username}</span>
                   <span className="text-xs text-gray-400">{new Date(comment.timestamp).toLocaleString()}</span>
+                  {comment.uid === userUid && (
+                    <button
+                      onClick={() => handleDelete(comment.id)}
+                      className="ml-2 text-xs text-red-500 hover:underline opacity-80 group-hover:opacity-100 transition"
+                      title="Delete comment"
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
                 <div className="text-[var(--text-color)] text-base break-words whitespace-pre-line">{comment.text}</div>
               </div>
