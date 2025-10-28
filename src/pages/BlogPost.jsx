@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useBlogPosts } from '../hooks/useBlogPosts'
 import { Calendar, Clock, ArrowLeft, Tag, Target, Heart, Brain, Dumbbell, BookOpen, Code } from 'lucide-react'
@@ -8,6 +8,28 @@ import LikeButton from '../components/LikeButton'
 import CommentsSection from '../components/CommentsSection'
 
 const BlogPost = () => {
+  // Progress bar state
+  const [progress, setProgress] = useState(0);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = contentRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const totalHeight = el.scrollHeight - windowHeight;
+      const scrollTop = window.scrollY - el.offsetTop;
+      let percent = 0;
+      if (totalHeight > 0) {
+        percent = Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100));
+      }
+      setProgress(percent);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const { slug } = useParams()
   const { posts, loading } = useBlogPosts()
   
@@ -38,7 +60,14 @@ const BlogPost = () => {
 
   return (
     <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Progress Bar */}
+      <div className="fixed top-0 left-0 w-full z-50 h-1 bg-transparent">
+        <div
+          className="h-full bg-[var(--accent-color)] transition-all duration-200"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      <div ref={contentRef} className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         <Link
           to="/blog"
           className="inline-flex items-center gap-2 mb-6 sm:mb-8 text-xs sm:text-sm hover:opacity-70 transition-opacity duration-200 text-[var(--text-secondary)]"
