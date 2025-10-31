@@ -13,6 +13,7 @@ import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
 import Resume from './pages/Resume'
 import NotFound from './pages/NotFound'
+import ComponentsLibrary from './pages/ComponentsLibrary'
 import CompLoader2 from './pages/CompLoader2'
 
 // ScrollToTop component
@@ -53,6 +54,7 @@ function AnimatedRoutes() {
         <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
         <Route path="/gallery" element={<PageTransition><Gallery /></PageTransition>} />
         <Route path="/resume" element={<PageTransition><Resume /></PageTransition>} />
+        <Route path="/components-library" element={<PageTransition><ComponentsLibrary /></PageTransition>} />
         <Route path="/comp-loader" element={<PageTransition><CompLoader2 /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>

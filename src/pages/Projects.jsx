@@ -24,6 +24,17 @@ const Projects = () => {
       live: null,
       date: "October 2024",
       status: "IN PROGRESS"
+    },
+    {
+      id: 3,
+      title: "Album Vault",
+      description: "Flex your playlist using album arts. A visual music showcase built with Spotify Developer API to display your favorite albums in style.",
+      image: "https://i.ibb.co/fdX3B8H6/image.png",
+      tags: ["React", "TypeScript", "Spotify API", "Tailwind CSS"],
+      github: "https://github.com/CoderKavyaG/album-vault",
+      live: "https://album-party-blond.vercel.app",
+      date: "October 2024",
+      status: "ACTIVE"
     }
   ]
 
@@ -57,7 +68,7 @@ const Projects = () => {
                   <img 
                     src={project.image} 
                     alt={project.title}
-                    className="w-full h-full object-cover opacity-70"
+                    className="w-full h-full object-cover opacity-90 rounded-xl border-4 border-[var(--accent-color)] shadow-lg transition-transform duration-300 hover:scale-105"
                   />
                   {/* Gaming Overlay Header */}
                   <div className="absolute top-0 left-0 right-0 bg-[var(--surface-color)] border-b-2 border-[var(--border-color)] px-3 py-1 flex items-center justify-between">

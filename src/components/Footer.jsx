@@ -1,5 +1,5 @@
 import React from 'react'
-import { Github, Linkedin, Instagram } from 'lucide-react'
+import { Github } from 'lucide-react'
 
 const XIcon = () => (
   <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -18,39 +18,36 @@ const Footer = () => {
       name: 'X',
       href: 'https://x.com/coderkavyag',
       icon: XIcon
-    },
-    {
-      name: 'LinkedIn',
-      href: 'https://linkedin.com/in/coderkavyag',
-      icon: Linkedin
-    },
-
-    {
-      name: 'Instagram',
-      href: 'https://instagram.com/coderkavyag',
-      icon: Instagram
-    },
+    }
   ]
 
   return (
-    <footer className="border-t py-8 bg-[var(--surface-color)] border-[var(--border-color)]">
+    <footer className="border-t border-dashed py-4 bg-[var(--bg-color)] border-[var(--border-color)]">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-          <div className="text-sm text-[var(--text-secondary)]">
-            Built by <span className="font-medium text-[var(--text-color)]">@coderkavyag</span>
+        <div className="flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 border border-[var(--border-color)] rounded flex items-center justify-center">
+              <span className="text-lg">👨‍💻</span>
+            </div>
+            <div>
+              <p className="font-mono text-[var(--text-secondary)]">@CODERKAVYAG</p>
+              <p className="font-mono text-[var(--text-secondary)] opacity-60">Full Stack Developer</p>
+            </div>
           </div>
           
-          <div className="flex items-center space-x-6">
+          <div className="flex items-center gap-4">
+            <span className="font-mono text-[var(--text-secondary)] hidden sm:block">FOLLOW ME HERE:</span>
             {socialLinks.map(({ name, href, icon: Icon }) => (
               <a
                 key={name}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:transform hover:-translate-y-1 transition-all duration-200 text-[var(--text-secondary)]"
+                className="border border-[var(--border-color)] px-3 py-1.5 hover:border-[var(--text-color)] transition-colors flex items-center gap-2 text-[var(--text-secondary)]"
                 aria-label={name}
               >
-                <Icon className="w-6 h-6" />
+                <Icon className="w-4 h-4" />
+                <span className="font-mono text-xs hidden sm:inline">{name}</span>
               </a>
             ))}
           </div>

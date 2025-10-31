@@ -40,6 +40,7 @@ const Loader = ({ onLoadComplete }) => {
           <div className="w-48 h-48 md:w-64 md:h-64 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 rounded-full animate-pulse"></div>
         </div>
         
+
         <div className="relative z-10 text-center px-4">
           <div className="h-20 md:h-28 flex items-center justify-center">
             {names.map((name, index) => (
@@ -53,12 +54,13 @@ const Loader = ({ onLoadComplete }) => {
                     : 'opacity-0 scale-110 translate-y-12 blur-sm'
                 }`}
               >
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 bg-clip-text text-transparent tracking-wide drop-shadow-2xl">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold font-mono bg-gradient-to-r from-blue-400 via-blue-300 to-blue-500 bg-clip-text text-transparent tracking-wide drop-shadow-2xl">
                   {name.text}
                 </h1>
               </div>
             ))}
           </div>
+
 
           <div className="flex gap-1.5 md:gap-2 justify-center mt-10 md:mt-14">
             {names.map((_, index) => (
