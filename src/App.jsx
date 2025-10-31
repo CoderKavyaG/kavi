@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { ThemeProvider } from './contexts/ThemeContext'
@@ -12,6 +13,7 @@ import Projects from './pages/Projects'
 import Gallery from './pages/Gallery'
 import Resume from './pages/Resume'
 import NotFound from './pages/NotFound'
+import CompLoader2 from './pages/CompLoader2'
 
 // ScrollToTop component
 function ScrollToTop() {
@@ -51,6 +53,7 @@ function AnimatedRoutes() {
         <Route path="/projects" element={<PageTransition><Projects /></PageTransition>} />
         <Route path="/gallery" element={<PageTransition><Gallery /></PageTransition>} />
         <Route path="/resume" element={<PageTransition><Resume /></PageTransition>} />
+        <Route path="/comp-loader" element={<PageTransition><CompLoader2 /></PageTransition>} />
         <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
       </Routes>
     </AnimatePresence>
@@ -69,6 +72,7 @@ function App() {
       <Router basename="/">
         <ScrollToTop />
         <div className="font-sans min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
+          <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
           {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
           <Header />
           <AnimatedRoutes />

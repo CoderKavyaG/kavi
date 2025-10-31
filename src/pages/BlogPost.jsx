@@ -1,9 +1,35 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { useBlogPosts } from '../hooks/useBlogPosts'
 import { Calendar, Clock, ArrowLeft, Tag, Target, Heart, Brain, Dumbbell, BookOpen, Code } from 'lucide-react'
+import ReactMarkdown from 'react-markdown'
+import rehypeHighlight from 'rehype-highlight'
+import LikeButton from '../components/LikeButton'
+import CommentsSection from '../components/CommentsSection'
 
 const BlogPost = () => {
+  // Progress bar state
+  const [progress, setProgress] = useState(0);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const el = contentRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const totalHeight = el.scrollHeight - windowHeight;
+      const scrollTop = window.scrollY - el.offsetTop;
+      let percent = 0;
+      if (totalHeight > 0) {
+        percent = Math.min(100, Math.max(0, (scrollTop / totalHeight) * 100));
+      }
+      setProgress(percent);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   const { slug } = useParams()
   const { posts, loading } = useBlogPosts()
   
@@ -12,11 +38,11 @@ const BlogPost = () => {
       <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
         <div className="max-w-3xl mx-auto px-6 py-12">
           <div className="animate-pulse space-y-6">
-            <div className="h-16 border-4 border-[var(--text-color)] bg-[var(--surface-color)]"></div>
-            <div className="h-64 border-4 border-[var(--text-color)] bg-[var(--surface-color)]"></div>
+            <div className="h-8 rounded w-1/3 bg-[var(--surface-color)]"></div>
+            <div className="h-64 rounded-lg bg-[var(--surface-color)]"></div>
             <div className="space-y-3">
-              <div className="h-4 border-2 border-[var(--text-color)] w-full bg-[var(--surface-color)]"></div>
-              <div className="h-4 border-2 border-[var(--text-color)] w-5/6 bg-[var(--surface-color)]"></div>
+              <div className="h-4 rounded w-full bg-[var(--surface-color)]"></div>
+              <div className="h-4 rounded w-5/6 bg-[var(--surface-color)]"></div>
             </div>
           </div>
         </div>
@@ -34,178 +60,186 @@ const BlogPost = () => {
 
   return (
     <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        <Link 
+      {/* Progress Bar */}
+      <div className="fixed top-0 left-0 w-full z-50 h-1 bg-transparent">
+        <div
+          className="h-full bg-[var(--accent-color)] transition-all duration-200"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      <div ref={contentRef} className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <Link
           to="/blog"
-          className="inline-flex items-center gap-2 mb-6 sm:mb-8 px-3 py-1.5 border-2 border-[var(--border-color)] font-mono text-xs font-bold hover:translate-x-0.5 transition-transform bg-[var(--surface-color)] text-[var(--text-secondary)]"
+          className="inline-flex items-center gap-2 mb-6 sm:mb-8 text-xs sm:text-sm hover:opacity-70 transition-opacity duration-200 text-[var(--text-secondary)]"
         >
-          <ArrowLeft className="w-3 h-3" />
-          BACK
+          <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+          Back to all blogs
         </Link>
 
-        <div className="border-4 border-[var(--border-color)] overflow-hidden mb-6 sm:mb-8 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-          <div className="bg-[var(--surface-color)] border-b-4 border-[var(--border-color)] px-3 py-2">
-            <span className="font-mono font-bold text-xs text-[var(--text-color)]">QUEST LOG</span>
-          </div>
-          <div className="relative h-48 sm:h-64 md:h-72 overflow-hidden bg-[var(--bg-color)]">
-            <img 
-              src={post.coverImage} 
-              alt={post.title}
-              className="w-full h-full object-cover opacity-70"
-            />
-          </div>
-          <div className="p-4 sm:p-5 md:p-6 bg-[var(--surface-color)]">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 font-mono uppercase text-[var(--text-color)] leading-tight">
+        <div className="relative h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden mb-6 sm:mb-8">
+          <img
+            src={post.coverImage}
+            alt={post.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-2 sm:mb-4 text-white tracking-tight">
               {post.title} {isWinterArc && '❄️'}
             </h1>
-            <p className="text-xs sm:text-sm font-mono text-[var(--text-secondary)] leading-relaxed">
-              {post.excerpt}
-            </p>
+            {post.excerpt && post.excerpt.trim().length > 0 && (
+              <p className="text-sm sm:text-base md:text-xl text-gray-200 leading-relaxed max-w-2xl">
+                {post.excerpt}
+              </p>
+            )}
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-4 sm:gap-6 pb-4 mb-6 border-b-2 border-dashed border-[var(--border-color)]">
-          <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
-            <Calendar className="w-3 h-3" />
+        <div className="flex flex-wrap items-center gap-6 pb-8 mb-8 border-b border-[var(--border-color)]">
+          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+            <Calendar className="w-4 h-4" />
             <time dateTime={post.date}>
-              {new Date(post.date).toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric', 
-                year: 'numeric' 
+              {new Date(post.date).toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
               })}
             </time>
           </div>
-          <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
-            <Clock className="w-3 h-3" />
+          <div className="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
+            <Clock className="w-4 h-4" />
             <span>{post.readTime}</span>
           </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            {post.tags.map((tag) => (
-              <span 
-                key={tag}
-                className="px-2 py-0.5 border-2 border-[var(--border-color)] text-xs font-mono bg-[var(--bg-color)] text-[var(--text-secondary)]"
-              >
-                {tag}
-              </span>
-            ))}
+          <div className="flex items-center gap-2">
+            <Tag className="w-4 h-4 text-[var(--text-secondary)]" />
+            <div className="flex gap-2 flex-wrap">
+              {post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="px-3 py-1 rounded-full text-xs font-medium bg-[var(--accent-bg)] text-[var(--text-secondary)]"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="ml-auto">
+            <LikeButton slug={post.slug} />
           </div>
         </div>
 
-        {/* Content - Special rendering for Winter Arc */}
         {isWinterArc ? (
           <article className="space-y-12">
-            {/* Goals Section */}
             <section className="space-y-8">
-              <div className="border-4 border-[var(--border-color)] bg-[var(--surface-color)] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-                <h2 className="text-xl font-bold font-mono uppercase mb-2 text-[var(--text-color)]">
-                  ▸ Mission Objectives
+              <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4 text-[var(--text-color)]">
+                  Winter Arc Goals
                 </h2>
-                <p className="text-xs font-mono text-[var(--text-secondary)]">
-                  Next 90 Days Quest Line
+                <p className="text-lg text-[var(--text-secondary)]">
+                  Next 90 Days
                 </p>
               </div>
-
-              {/* Goal Cards */}
+              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Skills Goal */}
-                <div className="border-4 border-[var(--border-color)] bg-[var(--surface-color)] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-                  <div className="bg-[var(--surface-color)] border-b-4 border-[var(--border-color)] px-3 py-2 flex items-center gap-2">
-                    <Target className="w-4 h-4 text-[var(--text-color)]" />
-                    <span className="font-mono font-bold text-xs text-[var(--text-color)]">SKILLS</span>
+                
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Target className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <div className="p-4">
-                    <ul className="space-y-1.5 text-xs font-mono text-[var(--text-secondary)] leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Finish @kirat_tw web-dev cohort</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Start with DevOps</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Consistent DSA practice</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Master core CS subjects</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Track & improve coding time</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
+                    Acquire Skills
+                  </h3>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Finish @kirat_tw web-dev cohort and build good projects</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Start with DevOps after web dev</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Start with DSA in consistent manner</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Get good grasp of core CS subjects</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Track coding periods and improve them</span>
+                    </li>
+                  </ul>
                 </div>
 
-                {/* Physical Health Goal */}
-                <div className="border-4 border-[var(--border-color)] bg-[var(--surface-color)] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-                  <div className="bg-[var(--surface-color)] border-b-4 border-[var(--border-color)] px-3 py-2 flex items-center gap-2">
-                    <Dumbbell className="w-4 h-4 text-[var(--text-color)]" />
-                    <span className="font-mono font-bold text-xs text-[var(--text-color)]">FITNESS</span>
+                
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Dumbbell className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <div className="p-4">
-                    <ul className="space-y-1.5 text-xs font-mono text-[var(--text-secondary)] leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Build muscle mass</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Fix sleep schedule</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Clean balanced diet</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Daily exercise routine</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
+                    Body Shape
+                  </h3>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Muscle building</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Improve my sleep cycle</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Get into a clean balanced diet</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Start exercising and lose weight</span>
+                    </li>
+                  </ul>
                 </div>
 
-                {/* Mental Health Goal */}
-                <div className="border-4 border-[var(--border-color)] bg-[var(--surface-color)] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-                  <div className="bg-[var(--surface-color)] border-b-4 border-[var(--border-color)] px-3 py-2 flex items-center gap-2">
-                    <Brain className="w-4 h-4 text-[var(--text-color)]" />
-                    <span className="font-mono font-bold text-xs text-[var(--text-color)]">MINDSET</span>
+                
+                <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mb-4 bg-[var(--accent-bg)]">
+                    <Brain className="w-6 h-6 text-[var(--accent-color)]" />
                   </div>
-                  <div className="p-4">
-                    <ul className="space-y-1.5 text-xs font-mono text-[var(--text-secondary)] leading-relaxed">
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Kill doomscrolling habit</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Read books daily</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-[var(--text-color)]">▸</span>
-                        <span>Level up communication</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[var(--text-color)]">
+                    Mental Well-being
+                  </h3>
+                  <ul className="space-y-2 text-sm text-[var(--text-secondary)]">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>End my doomscrolling addiction</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Start reading books</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1">•</span>
+                      <span>Improve vocabulary, vocal command and communication</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              <div className="border-2 border-dashed border-[var(--border-color)] p-4 bg-[var(--surface-color)]">
-                <p className="text-xs font-mono text-center text-[var(--text-secondary)]">
-                  💡 Next 90 days = Final boss of 2025. Let's max out these stats!
+              <div className="text-center py-6 px-8 rounded-xl border-2 border-[var(--accent-color)] bg-[var(--accent-bg)]">
+                <p className="text-lg font-semibold text-[var(--text-color)]">
+                  Next 90 days are kind of unfinished tour of 2025, let's get max out of them!
                 </p>
               </div>
             </section>
 
-            {/* Daily Progress */}
+            
             <section className="space-y-6">
               <h2 className="text-3xl font-bold mb-8 text-[var(--text-color)]">
                 Daily Progress
               </h2>
 
-              {/* Day 3 */}
+              
               <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 3</h3>
@@ -244,7 +278,7 @@ const BlogPost = () => {
                 </div>
               </div>
 
-              {/* Day 2 */}
+              
               <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 2</h3>
@@ -293,7 +327,7 @@ const BlogPost = () => {
                 </div>
               </div>
 
-              {/* Day 1 */}
+              
               <div className="p-6 rounded-xl border bg-[var(--surface-color)] border-[var(--border-color)]">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-2xl font-bold text-[var(--text-color)]">Day 1</h3>
@@ -340,7 +374,7 @@ const BlogPost = () => {
               </div>
             </section>
 
-            {/* Footer */}
+            
             <div className="text-center py-8 px-6 rounded-xl bg-[var(--accent-bg)]">
               <p className="text-lg font-medium mb-2 text-[var(--text-color)]">
                 The Journey Continues...
@@ -354,15 +388,70 @@ const BlogPost = () => {
             </div>
           </article>
         ) : (
-          /* Regular blog content */
-          <article 
-            className="prose prose-lg max-w-none text-[var(--text-secondary)]"
-          >
-            <div className="whitespace-pre-wrap leading-relaxed text-base">
+          
+          <article className="max-w-none text-[var(--text-secondary)]">
+            <ReactMarkdown rehypePlugins={[rehypeHighlight]}
+              components={{
+                h1: ({node, ...props}) => <h1 className="text-3xl sm:text-4xl font-bold text-[var(--text-color)] mb-4" {...props} />,
+                h2: ({node, ...props}) => <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-color)] mt-8 mb-3" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-xl sm:text-2xl font-semibold text-[var(--text-color)] mt-6 mb-2" {...props} />,
+                p: ({node, ...props}) => <p className="leading-relaxed mb-4" {...props} />,
+                ul: ({node, ...props}) => <ul className="list-disc pl-6 space-y-1 mb-4" {...props} />,
+                ol: ({node, ...props}) => <ol className="list-decimal pl-6 space-y-1 mb-4" {...props} />,
+                li: ({node, ...props}) => <li className="leading-relaxed" {...props} />,
+                code: ({node, inline, className, children, ...props}) => (
+                  <code className={`rounded bg-[var(--surface-color)] px-1.5 py-0.5 ${className || ''}`} {...props}>{children}</code>
+                ),
+                pre: ({node, ...props}) => (
+                  <pre className="rounded-lg bg-[var(--surface-color)] border border-[var(--border-color)] p-4 overflow-x-auto mb-4" {...props} />
+                ),
+                img: ({node, ...props}) => (
+                  (() => {
+                    const src = props.src || ''
+                    const alt = (props.alt || '').toString().toLowerCase()
+                    const isProcessingDiagram = alt.includes('processing') || src.includes('Rk4Xw2NL')
+                    const isPikachu = alt.includes('pikachu') || src.includes('GQwqDqb4')
+                    if (isProcessingDiagram) {
+                      return (
+                        <div className="w-full overflow-hidden rounded-xl border border-[var(--border-color)] bg-[var(--surface-color)] my-4">
+                          <img
+                            loading="lazy"
+                            src={src}
+                            alt={props.alt}
+                            className="w-full h-72 sm:h-80 md:h-96 object-cover object-bottom"
+                          />
+                        </div>
+                      )
+                    }
+                    if (isPikachu) {
+                      return (
+                        <img
+                          loading="lazy"
+                          src={src}
+                          alt={props.alt}
+                          className="w-full h-auto rounded-xl border border-[var(--border-color)] bg-[var(--surface-color)] my-4 object-contain"
+                        />
+                      )
+                    }
+                    return (
+                      <img
+                        loading="lazy"
+                        className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--surface-color)] my-4"
+                        {...props}
+                      />
+                    )
+                  })()
+                ),
+                blockquote: ({node, ...props}) => (
+                  <blockquote className="border-l-4 border-[var(--accent-color)]/60 pl-4 italic mb-4" {...props} />
+                )
+              }}
+            >
               {post.content}
-            </div>
+            </ReactMarkdown>
           </article>
         )}
+
 
         <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
           <Link 
@@ -372,6 +461,10 @@ const BlogPost = () => {
             <ArrowLeft className="w-4 h-4" />
             View all blogs
           </Link>
+        </div>
+        {/* Comments Section */}
+        <div className="max-w-4xl mx-auto px-4 pb-12">
+          <CommentsSection postId={post.slug} />
         </div>
       </div>
     </main>
