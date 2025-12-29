@@ -26,12 +26,6 @@ const Header = () => {
         </Link>
         <div className="flex items-center space-x-3 sm:space-x-6">
           <Link
-            to="/components-library"
-            className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/components-library') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
-          >
-            Components Library
-          </Link>
-          <Link
             to="/blog"
             className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/blog') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
           >

@@ -21,7 +21,7 @@ const GetInTouch = () => {
           Gmail
         </a>
         <a
-          href="https://twitter.com/coderkavyag"
+          href="https://x.com/goelsahhab"
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--text-color)] text-[var(--bg-color)] font-bold border-2 border-[var(--text-color)] hover:translate-x-1 hover:translate-y-1 transition-transform"
@@ -35,7 +35,10 @@ const GetInTouch = () => {
 
       <div className="border-t-4 border-dashed border-[var(--border-color)] pt-8 mt-8">
         <p className="text-sm font-mono text-[var(--text-secondary)] italic">
-          Stay hungry, stay foolish
+          Nothing sits heavy as the crown on the king
+        </p>
+        <p className="text-xs font-mono text-[var(--text-secondary)] mt-2">
+          — KING
         </p>
       </div>
     </div>

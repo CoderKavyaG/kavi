@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import ProfilePicture from '../components/ProfilePicture'
 import SpotifyWidget from '../components/SpotifyWidget'
 import CodingStats from '../components/CodingStats'
+import GitHubActivity from '../components/GitHubActivity'
 import ProofOfWork from '../components/ProofOfWork'
-import GetInTouch from '../components/GetInTouch'
+
 import ContactModal from '../components/ContactModal'
 import { Link } from 'react-router-dom'
-import { GitBranch } from 'lucide-react'
+import { GitBranch, BookOpen } from 'lucide-react'
+import { blogPosts } from '../data/blogPosts'
 
 const Home = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
@@ -228,28 +230,87 @@ const Home = () => {
             <ProofOfWork />
           </div>
 
-          {/* GITHUB FOLLOW BUTTON */}
+          {/* FEATURED BLOGS SECTION */}
           <div className="mt-8 pt-8 border-t-2 border-dotted border-[var(--border-color)] relative">
             <span className="absolute top-1 right-1 text-[10px] font-mono text-[var(--text-secondary)] opacity-60">margin-top: 32px</span>
-            <div className="flex items-center gap-4">
+            <div className="space-y-6">
+              <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
+                <h2 className="text-base sm:text-lg font-bold font-mono uppercase text-[var(--text-color)] flex items-center gap-3">
+                  <BookOpen className="w-5 h-5" />
+                  ▸ Quest Journal
+                </h2>
+                <p className="text-xs font-mono text-[var(--text-secondary)] mt-2">Featured blog posts & insights</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {blogPosts.slice(0, 2).map((blog) => (
+                  <Link
+                    key={blog.id}
+                    to={`/blog/${blog.slug}`}
+                    className="border-4 border-[var(--border-color)] overflow-hidden hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,0.3)] transition-all group"
+                  >
+                    <div className="relative h-40 overflow-hidden bg-[var(--surface-color)]">
+                      <img
+                        src={blog.coverImage}
+                        alt={blog.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors"></div>
+                    </div>
+                    <div className="p-4 bg-[var(--surface-color)]">
+                      <div className="flex flex-wrap gap-2 mb-2">
+                        {blog.tags.slice(0, 2).map((tag) => (
+                          <span key={tag} className="text-[10px] font-mono bg-[var(--accent-color)] text-black px-2 py-0.5 border border-[var(--text-color)]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className="text-sm font-bold font-mono text-[var(--text-color)] mb-2 line-clamp-2 group-hover:text-[var(--accent-color)] transition-colors">
+                        {blog.title}
+                      </h3>
+                      <p className="text-xs font-mono text-[var(--text-secondary)] mb-3">
+                        {blog.date} • {blog.readTime}
+                      </p>
+                      <p className="text-xs font-mono text-[var(--text-secondary)] line-clamp-2 mb-3">
+                        {blog.excerpt || 'Explore this insightful post...'}
+                      </p>
+                      <button className="w-full border-2 border-[var(--text-color)] bg-transparent text-[var(--text-color)] px-3 py-2 font-mono text-xs font-bold uppercase hover:bg-[var(--text-color)] hover:text-[var(--bg-color)] transition-colors">
+                        READ BLOG
+                      </button>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+
+              {blogPosts.length > 2 && (
+                <div className="flex justify-center pt-4">
+                  <Link
+                    to="/blog"
+                    className="border-2 border-[var(--text-color)] bg-[var(--accent-color)] text-black px-6 py-2 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] transition-all font-mono text-sm font-bold uppercase"
+                  >
+                    SHOW ALL BLOGS
+                  </Link>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* GITHUB ACTIVITY */}
+          <div className="mt-8 pt-8 border-t-2 border-dotted border-[var(--border-color)] relative">
+            <div className="flex items-center justify-between mb-6">
+              <div></div>
               <a
                 href="https://github.com/CoderKavyaG"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 border-2 border-[var(--text-color)] bg-[var(--accent-color)] text-black px-4 py-2 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] transition-all font-mono text-sm font-bold uppercase"
+                className="inline-flex items-center gap-2 border-2 border-[var(--text-color)] bg-[var(--accent-color)] text-black px-3 py-1.5 hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,0.3)] transition-all font-mono text-xs font-bold uppercase"
                 title="Follow on GitHub"
               >
-                <GitBranch className="w-4 h-4" />
+                <GitBranch className="w-3 h-3" />
                 Follow
               </a>
-              <span className="text-xs font-mono text-[var(--text-secondary)]">Check out my work on GitHub →</span>
             </div>
-          </div>
-
-          {/* GET IN TOUCH SECTION */}
-          <div className="mt-8 pt-8 border-t-2 border-dotted border-[var(--border-color)] relative">
-            <span className="absolute top-1 right-1 text-[10px] font-mono text-[var(--text-secondary)] opacity-60">margin-top: 32px</span>
-            <GetInTouch />
+            <GitHubActivity />
           </div>
           
         </div>

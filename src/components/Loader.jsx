@@ -7,8 +7,8 @@ const Loader = ({ onLoadComplete }) => {
   const names = [
     { text: 'Kavi', language: 'English' },
     { text: 'कवि', language: 'Hindi' },
-    { text: 'ਕਵੀ', language: 'Punjabi' },
-    { text: 'கவி', language: 'Tamil' },
+    { text: 'मराठी', language: 'Marathi' },
+    { text: 'తెలుగు', language: 'Telugu' },
     { text: 'کاوی', language: 'Urdu' }
   ]
 

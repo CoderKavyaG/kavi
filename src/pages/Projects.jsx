@@ -5,17 +5,6 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "Portfolio",
-      description: "My personal portfolio website built with React, featuring blog system, projects showcase, real-time coding stats, and Spotify integration.",
-      image: "https://i.ibb.co/VcxJwz7R/image.png",
-      tags: ["React", "Vite", "Tailwind CSS", "Router"],
-      github: "https://github.com/CoderKavyaG/kavi",
-      live: "https://coderkavyag.github.io",
-      date: "October 2024",
-      status: "ACTIVE"
-    },
-    {
-      id: 2,
       title: "Album Vault",
       description: "Flex your playlist using album arts. A visual music showcase built with Spotify Developer API to display your favorite albums in style.",
       image: "https://i.ibb.co/fdX3B8H6/image.png",
@@ -155,34 +144,47 @@ const Projects = () => {
           </div>
         </section>
 
-        {/* Coming Soon Section - Gaming Style */}
-        <section className="mt-12 max-w-2xl mx-auto border-4 border-[var(--text-color)] bg-[var(--surface-color)] shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)]">
-          <div className="bg-[var(--accent-color)] text-black px-4 py-2 border-b-4 border-[var(--text-color)] flex items-center gap-2">
-            <Trophy className="w-5 h-5" />
-            <span className="font-mono font-bold text-sm">UPCOMING QUESTS</span>
+        {/* Sharing More Missions Section */}
+        <section className="mt-16 pt-12 border-t-4 border-dashed border-[var(--border-color)]">
+          <div className="border-4 border-[var(--text-color)] bg-[var(--surface-color)] p-5 shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] mb-8">
+            <div className="flex items-center gap-3">
+              <Trophy className="w-6 h-6 text-[var(--text-color)]" />
+              <div>
+                <h2 className="text-lg md:text-xl font-bold font-mono uppercase text-[var(--text-color)]">
+                  ▸ Sharing More Missions
+                </h2>
+                <p className="text-xs font-mono text-[var(--text-secondary)] mt-0.5">
+                  Coming soon • Currently grinding
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="p-8 text-center">
-            <h2 className="text-xl font-bold font-mono uppercase mb-2 text-[var(--text-color)]">
-              More Missions Loading...
-            </h2>
-            <p className="text-sm font-mono mb-6 text-[var(--text-secondary)]">
-              Currently grinding and leveling up. Check back for new quests!
+          
+          <div className="bg-gradient-to-br from-[var(--surface-color)] to-[var(--bg-color)] border-4 border-dashed border-[var(--border-color)] p-12 text-center shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
+            <div className="w-16 h-16 mx-auto mb-6 border-4 border-[var(--text-color)] rounded-full flex items-center justify-center text-2xl bg-[var(--bg-color)]">
+              🚀
+            </div>
+            <h3 className="text-2xl font-bold font-mono uppercase mb-3 text-[var(--text-color)]">
+              More Quests in Development
+            </h3>
+            <p className="text-sm font-mono text-[var(--text-secondary)] mb-8 max-w-lg mx-auto">
+              I'm continuously building and shipping new projects. Stay tuned for more exciting missions to be revealed soon!
             </p>
-            <div className="flex gap-3 justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a 
-                href="https://github.com/coderkavyag"
+                href="https://github.com/CoderKavyaG"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 border-2 border-[var(--text-color)] text-sm font-mono font-bold hover:translate-x-0.5 hover:translate-y-0.5 transition-transform bg-[var(--bg-color)] text-[var(--text-color)]"
+                className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-[var(--text-color)] text-sm font-mono font-bold hover:translate-x-1 hover:translate-y-1 transition-transform bg-[var(--bg-color)] text-[var(--text-color)]"
               >
                 <Github className="w-4 h-4" />
-                GITHUB →
+                VIEW ON GITHUB
               </a>
               <a
                 href="mailto:codecraftkavya@gmail.com"
-                className="flex items-center gap-2 px-4 py-2 border-2 border-[var(--text-color)] text-sm font-mono font-bold hover:translate-x-0.5 hover:translate-y-0.5 transition-transform bg-[var(--accent-color)] text-black"
+                className="flex items-center justify-center gap-2 px-6 py-3 border-2 border-[var(--text-color)] text-sm font-mono font-bold hover:translate-x-1 hover:translate-y-1 transition-transform bg-[var(--accent-color)] text-black"
               >
-                CONTACT →
+                GET IN TOUCH
               </a>
             </div>
           </div>

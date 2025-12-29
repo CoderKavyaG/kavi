@@ -7,8 +7,8 @@ const CompDemoLoader = ({
   names = [
     { text: 'Loading', language: 'English' },
     { text: 'कृपया प्रतीक्षा करें', language: 'Hindi' },
-    { text: 'ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ', language: 'Punjabi' },
-    { text: 'ஏற்றப்படுகிறது', language: 'Tamil' },
+    { text: 'कृपया प्रतीक्षा करें', language: 'Marathi' },
+    { text: 'దయచేసి ఎదుర్కోండి', language: 'Telugu' },
     { text: 'لوڈ ہو رہا ہے', language: 'Urdu' }
   ],
   bgClass = 'bg-black',
