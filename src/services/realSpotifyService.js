@@ -7,20 +7,27 @@ class SpotifyService {
 
   async getCurrentlyPlaying() {
     try {
-      const response = await axios.get('/api/spotify');
+      // Try to fetch from API endpoint (works in production on Vercel)
+      const response = await axios.get('/api/spotify', {
+        timeout: 5000
+      });
       if (response.status === 200 && response.data) {
         return response.data;
       }
-      return null;
+      return this.getOfflineState();
     } catch (error) {
-      console.error('Error fetching current track:', error);
-      
-      return {
-        isPlaying: false,
-        track: null,
-        error: 'Connecting to Spotify...'
-      };
+      console.warn('API endpoint not available:', error.message);
+      // Fallback for development - show offline state
+      return this.getOfflineState();
     }
+  }
+
+  getOfflineState() {
+    return {
+      isPlaying: false,
+      track: null,
+      error: 'Spotify offline - Deploy to Vercel to enable'
+    };
   }
 
   // Direct Spotify API call for development

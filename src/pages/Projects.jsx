@@ -6,7 +6,7 @@ const Projects = () => {
     {
       id: 1,
       title: "Portfolio",
-      description: "My personal portfolio website built with React, featuring blog system with Winter Arc Journey, projects showcase, real-time coding stats, and Spotify integration.",
+      description: "My personal portfolio website built with React, featuring blog system, projects showcase, real-time coding stats, and Spotify integration.",
       image: "https://i.ibb.co/VcxJwz7R/image.png",
       tags: ["React", "Vite", "Tailwind CSS", "Router"],
       github: "https://github.com/CoderKavyaG/kavi",
@@ -16,17 +16,6 @@ const Projects = () => {
     },
     {
       id: 2,
-      title: "Brainly",
-      description: "A personal knowledge management system built to organize notes, documents, tweets, and links. Features include tagging, search, and categorization for building a digital second brain.",
-      image: "https://i.ibb.co/6Jt6gStD/image.png",
-      tags: ["React", "TypeScript", "Tailwind CSS", "Knowledge Management"],
-      github: "https://github.com/CoderKavyaG/brainly.com",
-      live: null,
-      date: "October 2024",
-      status: "IN PROGRESS"
-    },
-    {
-      id: 3,
       title: "Album Vault",
       description: "Flex your playlist using album arts. A visual music showcase built with Spotify Developer API to display your favorite albums in style.",
       image: "https://i.ibb.co/fdX3B8H6/image.png",

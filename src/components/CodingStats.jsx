@@ -1,13 +1,35 @@
-import React, { useState } from 'react'
-import { FaCode, FaGithub } from 'react-icons/fa'
+import React, { useState, useEffect } from 'react'
+import { FaGithub } from 'react-icons/fa'
+import githubService from '../services/githubService'
 
 const CodingStats = () => {
-  // Hardcoded stats to avoid GitHub API rate limiting
-  const [stats] = useState({
-    loading: false,
-    commits: 5,
-    repos: 15
+  const [stats, setStats] = useState({
+    loading: true,
+    commits: 0,
+    repos: 0
   })
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [commitsToday, userStats] = await Promise.all([
+          githubService.getTodayCommits(),
+          githubService.getUserStats()
+        ])
+        
+        setStats({
+          loading: false,
+          commits: commitsToday,
+          repos: userStats?.publicRepos || 0
+        })
+      } catch (error) {
+        console.error('Error fetching stats:', error)
+        setStats(prev => ({ ...prev, loading: false }))
+      }
+    }
+
+    fetchStats()
+  }, [])
 
   if (stats.loading) {
     return (

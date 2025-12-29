@@ -1,15 +1,26 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { GitBranch, Users, Trophy, Star } from 'lucide-react'
+import githubService from '../services/githubService'
 
 const GitHubActivity = () => {
-  const username = 'coderkavyag'
-  // Hardcoded stats to avoid API rate limiting
-  const [stats] = useState({
-    followers: 12,
-    repos: 15,
-    avatar: 'https://github.com/coderkavyag.png'
-  })
-  const [loading] = useState(false)
+  const username = 'CoderKavyaG'
+  const [stats, setStats] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const data = await githubService.getUserStats()
+        setStats(data)
+      } catch (error) {
+        console.error('Error fetching GitHub stats:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchStats()
+  }, [])
 
   // Gaming-style difficulty badge based on repos
   const getDifficultyLevel = (repos) => {
@@ -75,7 +86,7 @@ const GitHubActivity = () => {
             <div className="p-4 bg-[var(--bg-color)]">
               <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-[var(--border-color)] scrollbar-track-transparent">
                 <img
-                  src={`https://ghchart.rshah.org/${username}`}
+                  src={`https://ghchart.rshah.org/36a64f/${username}`}
                   alt="GitHub Contributions"
                   className="w-full min-w-[600px] sm:min-w-0 opacity-90 hover:opacity-100 transition-opacity"
                   style={{ imageRendering: 'auto' }}

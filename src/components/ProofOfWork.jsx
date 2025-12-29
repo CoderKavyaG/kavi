@@ -5,15 +5,6 @@ import { ExternalLink } from 'lucide-react'
 const ProofOfWork = () => {
   const projects = [
     {
-      title: 'Brainly',
-      description: 'A personal knowledge management system built to organize notes, documents, tweets, and links with tagging and search.',
-      image: 'https://i.ibb.co/6Jt6gStD/image.png',
-      link: 'https://github.com/CoderKavyaG/brainly.com',
-      tags: ['REACT', 'TYPESCRIPT', 'TAILWIND'],
-      status: 'IN PROGRESS',
-      statusColor: 'yellow'
-    },
-    {
       title: 'Album Vault',
       description: 'Flex your playlist using album arts. A visual music showcase built with Spotify Developer API to display your favorite albums in style.',
       image: 'https://i.ibb.co/fdX3B8H6/image.png',

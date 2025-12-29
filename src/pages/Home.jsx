@@ -2,11 +2,11 @@ import React, { useState } from 'react'
 import ProfilePicture from '../components/ProfilePicture'
 import SpotifyWidget from '../components/SpotifyWidget'
 import CodingStats from '../components/CodingStats'
-import GitHubActivity from '../components/GitHubActivity'
 import ProofOfWork from '../components/ProofOfWork'
 import GetInTouch from '../components/GetInTouch'
 import ContactModal from '../components/ContactModal'
 import { Link } from 'react-router-dom'
+import { GitBranch } from 'lucide-react'
 
 const Home = () => {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false)
@@ -228,17 +228,22 @@ const Home = () => {
             <ProofOfWork />
           </div>
 
-          {/* GITHUB ACTIVITY */}
+          {/* GITHUB FOLLOW BUTTON */}
           <div className="mt-8 pt-8 border-t-2 border-dotted border-[var(--border-color)] relative">
             <span className="absolute top-1 right-1 text-[10px] font-mono text-[var(--text-secondary)] opacity-60">margin-top: 32px</span>
-            <div className="mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold font-mono uppercase text-[var(--text-color)] relative">
-                <span className="absolute -top-5 left-0 text-[9px] font-mono text-[var(--text-secondary)] opacity-50">font-size: 24px</span>
-                ▸ Code Missions
-              </h2>
-              <p className="text-xs font-mono text-[var(--text-secondary)] mt-1">GitHub contribution tracker</p>
+            <div className="flex items-center gap-4">
+              <a
+                href="https://github.com/CoderKavyaG"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 border-2 border-[var(--text-color)] bg-[var(--accent-color)] text-black px-4 py-2 hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] transition-all font-mono text-sm font-bold uppercase"
+                title="Follow on GitHub"
+              >
+                <GitBranch className="w-4 h-4" />
+                Follow
+              </a>
+              <span className="text-xs font-mono text-[var(--text-secondary)]">Check out my work on GitHub →</span>
             </div>
-            <GitHubActivity />
           </div>
 
           {/* GET IN TOUCH SECTION */}
