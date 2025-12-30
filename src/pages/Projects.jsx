@@ -170,6 +170,12 @@ const Projects = () => {
           </div>
         </section>
 
+        {/* Building Message */}
+        <div className="mt-12 pt-8 border-t-2 border-dashed border-[var(--border-color)]">
+          <p className="text-center font-mono text-sm text-[var(--text-secondary)]">
+            Currently building and learning more • Follow GitHub
+          </p>
+        </div>
       </div>
     </main>
   )

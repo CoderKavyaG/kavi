@@ -80,15 +80,15 @@ const Blog = () => {
                   {post.tags.map((tag) => (
                     <span 
                       key={tag}
-                      className="px-2 py-0.5 border-2 border-slate-600 text-xs font-mono bg-slate-700 text-white"
+                      className="px-2 py-0.5 border-2 border-[var(--border-color)] text-xs font-mono bg-[var(--surface-color)] text-[var(--text-color)]"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
                 
-                <div className="flex items-center justify-between pt-2 border-t-2 border-dashed border-slate-700">
-                  <span className="flex items-center gap-2 text-xs font-mono text-slate-400">
+                <div className="flex items-center justify-between pt-2 border-t-2 border-dashed border-[var(--border-color)]">
+                  <span className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)]">
                     {new Date(post.date).toLocaleDateString('en-US', { 
                       month: 'short', 
                       day: 'numeric', 
@@ -96,7 +96,7 @@ const Blog = () => {
                     })}
                   </span>
                   
-                  <span className="text-xs font-mono text-white">
+                  <span className="text-xs font-mono text-[var(--text-color)]">
                     READ →
                   </span>
                 </div>
@@ -104,7 +104,12 @@ const Blog = () => {
             </Link>
           ))}
         </div>
-      </div>
+        {/* Journey Message */}
+        <div className="mt-12 pt-8 border-t-2 border-dashed border-[var(--border-color)]">
+          <p className="text-center font-mono text-sm text-[var(--text-secondary)]">
+            Check Twitter for the journey • New blogs will come too
+          </p>
+        </div>      </div>
     </main>
   )
 }
