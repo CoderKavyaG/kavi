@@ -15,6 +15,7 @@ import Resume from './pages/Resume'
 import NotFound from './pages/NotFound'
 import ComponentsLibrary from './pages/ComponentsLibrary'
 import CompLoader2 from './pages/CompLoader2'
+import NewYearCelebration from './components/NewYearCelebration'
 
 // ScrollToTop component
 function ScrollToTop() {
@@ -76,6 +77,7 @@ function App() {
         <div className="font-sans min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
           <Toaster position="top-center" toastOptions={{ duration: 2500 }} />
           {isLoading && <Loader onLoadComplete={handleLoadComplete} />}
+          <NewYearCelebration />
           <Header />
           <AnimatedRoutes />
           <Footer />
