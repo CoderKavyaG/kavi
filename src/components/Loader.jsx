@@ -7,9 +7,7 @@ const Loader = ({ onLoadComplete }) => {
   const names = [
     { text: 'Kavi', language: 'English' },
     { text: 'कवि', language: 'Hindi' },
-    { text: 'मराठी', language: 'Marathi' },
-    { text: 'తెలుగు', language: 'Telugu' },
-    { text: 'کاوی', language: 'Urdu' }
+    { text: 'ਕਵੀ', language: 'Punjabi' }
   ]
 
   useEffect(() => {

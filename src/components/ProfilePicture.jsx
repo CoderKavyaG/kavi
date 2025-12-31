@@ -1,10 +1,10 @@
 import React from 'react'
 
 const ProfilePicture = () => {
-  const profileImage = 'https://i.ibb.co/LXGvTyqm/image.png'
+  const profileImage = 'https://i.ibb.co/bMBz13cK/v-VXZna3h-400x400.jpg'
 
   return (
-    <div className="relative w-full h-full rounded-full overflow-hidden bg-yellow-400">
+    <div className="w-full h-full rounded-full overflow-hidden bg-yellow-400">
       <img 
         src={profileImage}
         alt="kavi" 
