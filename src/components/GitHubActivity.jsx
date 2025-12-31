@@ -13,11 +13,7 @@ const GitHubActivity = () => {
       try {
         const data = await githubService.getUserStats()
         setStats(data)
-        
-        // Fetch contributions from GitHub API
-        const response = await fetch(`https://api.github.com/users/${username}`)
-        const userData = await response.json()
-        setContributions(userData.public_repos)
+        setContributions(data?.publicRepos || 0)
       } catch (error) {
         console.error('Error fetching GitHub stats:', error)
       } finally {
