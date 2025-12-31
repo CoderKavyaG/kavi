@@ -49,7 +49,7 @@ const Projects = () => {
   ]
 
   return (
-  <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
+    <main className="pt-20 min-h-screen bg-[var(--bg-color)] text-[var(--text-color)]">
       <div className="max-w-5xl mx-auto px-6 py-16">
         {/* Gaming Header */}
         <header className="mb-12">
@@ -62,28 +62,27 @@ const Projects = () => {
         <section className="max-w-4xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {projects.map((project) => (
-              <article 
+              <article
                 key={project.id}
                 className="rounded-2xl border-2 border-[var(--border-color)] overflow-hidden bg-[var(--surface-color)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] transition-all group"
               >
                 {/* Image Section */}
                 <div className="relative h-56 overflow-hidden bg-gradient-to-br from-pink-600 to-purple-700">
-                  <img 
-                    src={project.image} 
+                  <img
+                    src={project.image}
                     alt={project.title}
                     className="w-full h-full object-cover opacity-90 transition-transform duration-300 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  
+
                   {/* Status Badge */}
                   <div className="absolute top-3 right-3 flex gap-2">
-                    <span className={`px-3 py-1 rounded-full border border-white font-mono text-xs font-bold ${
-                      project.status === 'ACTIVE' ? 'bg-green-500/80 text-white' : 'bg-yellow-500/80 text-white'
-                    }`}>
+                    <span className={`px-3 py-1 rounded-full border border-white font-mono text-xs font-bold ${project.status === 'ACTIVE' ? 'bg-green-500/80 text-white' : 'bg-yellow-500/80 text-white'
+                      }`}>
                       {project.status}
                     </span>
                   </div>
-                  
+
                   {/* Action Buttons */}
                   <div className="absolute bottom-3 right-3 flex gap-2">
                     {project.github && (
@@ -122,7 +121,7 @@ const Projects = () => {
                       {project.date}
                     </p>
                   </div>
-                  
+
                   <p className="text-xs leading-relaxed line-clamp-2 font-mono text-[var(--text-secondary)]">
                     {project.description}
                   </p>
@@ -130,9 +129,9 @@ const Projects = () => {
                   {/* Tags */}
                   <div className="flex flex-wrap gap-2 pt-2">
                     {project.tags.map((tag) => (
-                      <span 
+                      <span
                         key={tag}
-                        className="px-2 py-1 text-xs font-mono rounded border border-[var(--border-color)] bg-[var(--accent-color)]/20 text-[var(--text-color)] font-semibold"
+                        className="px-2 py-1 text-xs font-mono rounded border border-[var(--border-color)] bg-[var(--surface-color)] text-[var(--text-color)] font-semibold"
                       >
                         {tag}
                       </span>
