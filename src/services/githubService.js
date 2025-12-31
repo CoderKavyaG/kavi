@@ -1,5 +1,4 @@
 // GitHub service to fetch user statistics and commits
-import axios from 'axios';
 
 const GITHUB_API_BASE = 'https://api.github.com';
 const USERNAME = 'CoderKavyaG';
@@ -7,56 +6,51 @@ const USERNAME = 'CoderKavyaG';
 class GitHubService {
   async getUserStats() {
     try {
-      const response = await axios.get(`${GITHUB_API_BASE}/users/${USERNAME}`, {
-        headers: {
-          'Accept': 'application/vnd.github.v3+json',
+      const response = await fetch(`${GITHUB_API_BASE}/users/${USERNAME}`);
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          console.warn('GitHub API rate limit exceeded');
         }
-      });
+        throw new Error(`GitHub API Error: ${response.status}`);
+      }
+
+      const data = await response.json();
 
       return {
-        followers: response.data.followers || 0,
-        following: response.data.following || 0,
-        publicRepos: response.data.public_repos || 0,
-        avatar: response.data.avatar_url,
-        bio: response.data.bio,
-        company: response.data.company,
-        blog: response.data.blog,
+        followers: data.followers || 0,
+        following: data.following || 0,
+        publicRepos: data.public_repos || 0,
+        avatar: data.avatar_url,
+        bio: data.bio,
+        company: data.company,
+        blog: data.blog,
       };
     } catch (error) {
       console.error('Error fetching GitHub user stats:', error);
-      return null;
+      return { publicRepos: 0 };
     }
   }
 
   async getTodayCommits() {
     try {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      const todayDate = `${year}-${month}-${day}`;
-
-      // Get all events for the user
-      const response = await axios.get(
-        `${GITHUB_API_BASE}/users/${USERNAME}/events`,
-        {
-          headers: {
-            'Accept': 'application/vnd.github.v3+json',
-          },
-          params: {
-            per_page: 100
-          }
-        }
+      const response = await fetch(
+        `${GITHUB_API_BASE}/users/${USERNAME}/events?per_page=100`
       );
 
-      // Filter for PushEvent and get commits from today
+      if (!response.ok) {
+        throw new Error(`GitHub API Error: ${response.status}`);
+      }
+
+      const events = await response.json();
+      const today = new Date().toDateString();
+
       let commitsToday = 0;
-      const events = response.data || [];
-      
+
       events.forEach(event => {
         if (event.type === 'PushEvent' && event.payload && event.payload.commits) {
-          const eventDate = event.created_at.split('T')[0];
-          if (eventDate === todayDate) {
+          const eventDate = new Date(event.created_at).toDateString();
+          if (eventDate === today) {
             commitsToday += event.payload.commits.length;
           }
         }
@@ -71,21 +65,15 @@ class GitHubService {
 
   async getPublicRepos() {
     try {
-      const response = await axios.get(
-        `${GITHUB_API_BASE}/users/${USERNAME}/repos`,
-        {
-          headers: {
-            'Accept': 'application/vnd.github.v3+json',
-          },
-          params: {
-            sort: 'updated',
-            per_page: 10,
-            type: 'owner'
-          }
-        }
+      const response = await fetch(
+        `${GITHUB_API_BASE}/users/${USERNAME}/repos?sort=updated&per_page=10&type=owner`
       );
 
-      return response.data || [];
+      if (!response.ok) {
+        throw new Error(`GitHub API Error: ${response.status}`);
+      }
+
+      return await response.json();
     } catch (error) {
       console.error('Error fetching public repos:', error);
       return [];
