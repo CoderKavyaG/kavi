@@ -2,7 +2,6 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useTheme } from '../contexts/ThemeContext'
 import { Download } from 'lucide-react'
-import { isNewYear, triggerNewYearConfetti } from './NewYearCelebration'
 
 const Header = () => {
   const { theme, toggleTheme } = useTheme()
@@ -10,54 +9,42 @@ const Header = () => {
 
   const isActive = (path) => location.pathname === path
 
-  const linkColor = theme === 'dark' ? '#9ca3af' : '#525252'
-  const linkActiveColor = theme === 'dark' ? '#ffffff' : '#1a1a1a'
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-[var(--border-color)] ${theme === 'dark' ? 'bg-[rgba(0,0,0,0.8)]' : 'bg-[rgba(255,254,247,0.9)]'}`}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 relative flex justify-between items-center">
+    <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-lg border-b transition-all duration-300 ${theme === 'dark' ? 'bg-slate-950/95 border-slate-800' : 'bg-white/95 border-slate-200'}`}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 relative flex justify-between items-center">
         {/* Logo Section */}
-        <Link to="/" className="flex items-center gap-4 hover:opacity-80 transition-opacity duration-200">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-yellow-400">
+        <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-all duration-300 group">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg overflow-hidden bg-gradient-to-br from-yellow-400 to-orange-500 shadow-lg group-hover:scale-110 transition-transform">
             <img
               src="https://i.ibb.co/bMBz13cK/v-VXZna3h-400x400.jpg"
               alt="kavi"
               className="w-full h-full object-cover"
             />
           </div>
+          <span className={`hidden sm:block font-bold text-base transition-colors ${theme === 'dark' ? 'text-slate-100' : 'text-slate-900'}`}>KAVI</span>
         </Link>
 
         {/* Center Section */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
-          {isNewYear() && (
-            <button
-              onClick={triggerNewYearConfetti}
-              className="text-sm sm:text-base md:text-lg font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse hover:scale-110 transition-transform cursor-pointer"
-            >
-              🎉 HAPPY NEW YEAR 2026! 🥂
-            </button>
-          )}
-          <div className="hidden sm:flex items-center space-x-6">
-            <Link
-              to="/blog"
-              className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/blog') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
-            >
-              Blogs
-            </Link>
-            <Link
-              to="/projects"
-              className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/projects') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
-            >
-              Projects
-            </Link>
-          </div>
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 hidden sm:flex items-center space-x-8">
+          <Link
+            to="/blog"
+            className={`font-mono transition-all duration-300 ${isActive('/blog') ? `text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-slate-900'}` : `text-base ${theme === 'dark' ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'}`}`}
+          >
+            Blogs
+          </Link>
+          <Link
+            to="/projects"
+            className={`font-mono transition-all duration-300 ${isActive('/projects') ? `text-lg font-bold ${theme === 'dark' ? 'text-slate-100' : 'text-slate-900'}` : `text-base ${theme === 'dark' ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'}`}`}
+          >
+            Projects
+          </Link>
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-4">
           <button
             onClick={toggleTheme}
-            className="w-9 h-9 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 bg-[var(--accent-bg)] relative overflow-hidden"
+            className={`w-10 h-10 rounded-full flex items-center justify-center hover:scale-110 transition-all duration-300 border-2 ${theme === 'dark' ? 'border-slate-700 bg-slate-900' : 'border-slate-300 bg-slate-100'}`}
             aria-label="Toggle theme"
           >
             <div className="relative w-full h-full flex items-center justify-center">

@@ -48,7 +48,7 @@ const Home = () => {
               <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white bg-[var(--bg-color)] overflow-hidden shadow-lg">
                 <ProfilePicture />
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-[var(--accent-color)] border-4 border-white px-3 py-1.5 text-sm font-bold text-black rounded-full shadow-md">
+              <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-blue-500 to-cyan-500 border-4 border-white px-4 py-2 text-sm font-bold text-white rounded-full shadow-lg">
                 LVL 21
               </div>
             </div>
@@ -107,15 +107,15 @@ const Home = () => {
                   <h3 className="text-base font-bold font-mono mb-3 text-[var(--text-color)]">
                     ▸ PLAYER INFO
                   </h3>
-                  <p className="text-sm font-mono leading-relaxed text-[var(--text-secondary)]">
+                  <p className="text-sm font-mono leading-relaxed text-[var(--text-color)]">
                     I am a college student at a tier-3 college and realised late that I love doing web development, so I'm currently learning and building projects in web development.
                   </p>
                 </div>
                 <div className="pt-4 border-t border-[var(--border-color)]">
-                  <h3 className="text-sm font-bold font-mono mb-2 text-[var(--accent-color)]">
+                  <h3 className="text-sm font-bold font-mono mb-2 text-[var(--text-color)]">
                     ▸ CURRENT QUEST
                   </h3>
-                  <p className="text-xs font-mono text-[var(--text-secondary)]">
+                  <p className="text-xs font-mono text-[var(--text-color)]">
                     Building modern web applications with React & TypeScript
                   </p>
                 </div>
@@ -126,77 +126,34 @@ const Home = () => {
             {activeTab === 'skills' && (
               <div className="space-y-6">
                 <div>
-                  <h3 className="text-base font-bold font-mono mb-4 text-[var(--text-color)]">
-                    ▸ FRONTEND ABILITIES
+                  <h3 className="text-lg font-bold font-mono mb-2 text-[var(--text-color)]">
+                    I'm a Full Stack Developer
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <div className="bg-transparent border-2 border-[var(--border-color)] rounded-lg p-3 hover:bg-cyan-500/20 hover:border-cyan-500 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-[var(--text-color)]">⚛️ REACT</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-cyan-500"></div>
-                        <div className="w-2 h-2 bg-cyan-500"></div>
-                        <div className="w-2 h-2 bg-cyan-500"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                      </div>
-                    </div>
-                    <div className="bg-transparent border-2 border-[var(--border-color)] rounded-lg p-3 hover:bg-blue-500/20 hover:border-blue-500 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-[var(--text-color)]">TS TYPESCRIPT</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-blue-500"></div>
-                        <div className="w-2 h-2 bg-blue-500"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                      </div>
-                    </div>
-                    <div className="bg-transparent border-2 border-slate-600 rounded-lg p-3 hover:bg-cyan-600/20 hover:border-cyan-600 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-white">🎨 TAILWIND</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-cyan-600"></div>
-                        <div className="w-2 h-2 bg-cyan-600"></div>
-                        <div className="w-2 h-2 bg-cyan-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                      </div>
-                    </div>
-                  </div>
+                  <p className="text-sm font-mono mb-6 text-[var(--text-color)] leading-relaxed">
+                    I build beautiful and functional web applications using modern technologies. Specialized in React, JavaScript, TypeScript, Tailwind CSS with strong backend capabilities.
+                  </p>
                 </div>
+
                 <div>
                   <h3 className="text-base font-bold font-mono mb-4 text-[var(--text-color)]">
-                    ▸ BACKEND ABILITIES
+                    ▸ SKILLS
                   </h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    <div className="bg-transparent border-2 border-slate-600 rounded-lg p-3 hover:bg-green-500/20 hover:border-green-500 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-[var(--text-color)]">⬢ NODE.JS</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-green-500"></div>
-                        <div className="w-2 h-2 bg-green-500"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { name: 'React', icon: '⚛️' },
+                      { name: 'JavaScript', icon: 'JS' },
+                      { name: 'TypeScript', icon: 'TS' },
+                      { name: 'Tailwind', icon: '🎨' },
+                      { name: 'Node.js', icon: '⬢' },
+                      { name: 'MongoDB', icon: '🍃' },
+                      { name: 'PostgreSQL', icon: '🐘' },
+                      { name: 'Next.js', icon: '▲' }
+                    ].map((skill) => (
+                      <div key={skill.name} className="bg-[var(--surface-color)] border border-[var(--border-color)] rounded-lg px-3 py-2 flex items-center gap-2 text-sm font-mono hover:border-[var(--text-color)] transition-colors">
+                        <span className="text-lg">{skill.icon}</span>
+                        <span className="text-[var(--text-color)]">{skill.name}</span>
                       </div>
-                    </div>
-                    <div className="bg-transparent border-2 border-slate-600 rounded-lg p-3 hover:bg-emerald-500/20 hover:border-emerald-500 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-[var(--text-color)]">🍃 MONGODB</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-green-500"></div>
-                        <div className="w-2 h-2 bg-green-500"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                      </div>
-                    </div>
-                    <div className="bg-transparent border-2 border-slate-600 rounded-lg p-3 hover:bg-blue-500/20 hover:border-blue-500 transition-colors">
-                      <p className="text-xs font-mono font-bold mb-2 text-[var(--text-color)]">🐘 POSTGRESQL</p>
-                      <div className="flex gap-0.5">
-                        <div className="w-2 h-2 bg-blue-600"></div>
-                        <div className="w-2 h-2 bg-blue-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                        <div className="w-2 h-2 bg-slate-600"></div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
