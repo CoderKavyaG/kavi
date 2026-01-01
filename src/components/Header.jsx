@@ -28,30 +28,29 @@ const Header = () => {
         </Link>
 
         {/* Center Section */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          {isNewYear() ? (
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+          {isNewYear() && (
             <button
               onClick={triggerNewYearConfetti}
               className="text-sm sm:text-base md:text-lg font-bold bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 bg-clip-text text-transparent animate-pulse hover:scale-110 transition-transform cursor-pointer"
             >
               🎉 HAPPY NEW YEAR 2026! 🥂
             </button>
-          ) : (
-            <div className="hidden sm:flex items-center space-x-6">
-              <Link
-                to="/blog"
-                className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/blog') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
-              >
-                Blogs
-              </Link>
-              <Link
-                to="/projects"
-                className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/projects') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
-              >
-                Projects
-              </Link>
-            </div>
           )}
+          <div className="hidden sm:flex items-center space-x-6">
+            <Link
+              to="/blog"
+              className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/blog') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
+            >
+              Blogs
+            </Link>
+            <Link
+              to="/projects"
+              className={`text-xs sm:text-sm transition-colors duration-200 ${isActive('/projects') ? 'font-medium text-[var(--text-color)]' : 'hover:opacity-70 text-[var(--text-secondary)]'}`}
+            >
+              Projects
+            </Link>
+          </div>
         </div>
 
         {/* Right Section */}

@@ -3,15 +3,12 @@ import confetti from 'canvas-confetti';
 
 export const isNewYear = () => {
     const now = new Date();
-    // Check if it is January 1st
-    // Check if it is January 1st
+
     return now.getMonth() === 0 && now.getDate() === 1;
-    // return true; // TESTING MODE: Always show effect
 };
 
 export const triggerNewYearConfetti = () => {
-    // The duration of the confetti loop in milliseconds
-    const duration = 15 * 1000;
+    const duration = 2 * 1000;
     const animationEnd = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
@@ -28,7 +25,6 @@ export const triggerNewYearConfetti = () => {
 
         const particleCount = 50 * (timeLeft / duration);
 
-        // Since particles fall down, start a bit higher than random
         confetti({
             ...defaults,
             particleCount,
@@ -48,7 +44,7 @@ const NewYearCelebration = () => {
         triggerNewYearConfetti();
     }, []);
 
-    return null; // This component doesn't render DOM elements, just effects
+    return null; 
 };
 
 export default NewYearCelebration;
