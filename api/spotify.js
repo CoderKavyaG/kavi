@@ -54,10 +54,43 @@ export default async function handler(req, res) {
 
     // Handle different response states
     if (spotifyResponse.status === 204) {
-      // No content - you're not playing anything
+      // No currently playing - fetch recently played instead
+      const recentlyPlayedResponse = await fetch("https://api.spotify.com/v1/me/player/recently-played?limit=1", {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+
+      if (!recentlyPlayedResponse.ok) {
+        return res.status(200).json({
+          isPlaying: false,
+          track: null,
+        });
+      }
+
+      const recentData = await recentlyPlayedResponse.json();
+      if (!recentData.items || recentData.items.length === 0) {
+        return res.status(200).json({
+          isPlaying: false,
+          track: null,
+        });
+      }
+
+      const lastTrack = recentData.items[0].track;
       return res.status(200).json({
         isPlaying: false,
-        track: null,
+        wasLastPlayed: true,
+        track: {
+          id: lastTrack.id,
+          name: lastTrack.name,
+          artists: lastTrack.artists.map(artist => artist.name).join(', '),
+          album: lastTrack.album.name,
+          albumArt: lastTrack.album.images[0]?.url,
+          previewUrl: lastTrack.preview_url,
+          externalUrl: lastTrack.external_urls.spotify,
+          duration: lastTrack.duration_ms,
+          progress: 0,
+        },
       });
     }
 
